@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.9.6 — 15 Nov 2026
+
+- Equipment: chemicals cabinet.
+
 ## 1.9.5 — 15 Nov 2026
 
 - Delete this project from the project menu.
