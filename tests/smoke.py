@@ -76,6 +76,8 @@ with sync_playwright() as p:
             check(fd.startswith('5|Saved t.dxf in DXF'), 'exports can go straight into a chosen folder (%s)' % fd)
             pj = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});const was=T.ST.exp;T.ST.exp="folder";T.A.dxf();await new Promise(r=>setTimeout(r,800));T.ST.exp=was;const n=[];for await (const k of d.keys())n.push(k);const j=n.find(x=>x.endsWith(".json"));const p=JSON.parse(await (await (await d.getFileHandle(j)).getFile()).text());return n.sort().join(",")+"|"+p.rooms.length+"|"+(p.live===undefined);}')
             check(re.search(r'(\w+)\.dxf,\1\.json', pj) is not None and pj.endswith('|1|true'), 'the DXF export saves the project file next to it (%s)' % pj)
+            df = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,keep=JSON.stringify(S.p);try{S.p.floors=[S.p.floors[0]];S.p.labs.forEach(l=>l.floor=S.p.floors[0].id);T.A.delfloor();const ok=S.p.rooms.length>0&&S.p.labs.length>0&&S.p.floors.length>0;S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return ok;}catch(e){S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return String(e);}}')
+            check(df is True, 'deleting the only floor leaves a room to draw in (%s)' % df)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)

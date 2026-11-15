@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.6.3 — 15 Nov 2026
+
+- Phones: one-row header, and the floor, laboratory and room switches fit the screen.
+- General bug fixes.
+
 ## 1.6.2 — 15 Nov 2026
 
 - 3D: empty floors below yours get the outside walls and windows of your floor.
