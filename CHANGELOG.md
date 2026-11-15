@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.6.1 — 15 Nov 2026
+
+- 3D shows the floors below yours, even empty ones, as a named stack.
+
 ## 1.6.0 — 15 Nov 2026
 
 - The DXF export saves the project file (.json) next to it, under the same name, to open later and carry on.
