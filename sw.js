@@ -1,5 +1,5 @@
 // DXF Sketch offline cache. VERSION must match APP_VERSION in index.html; bump both on every release.
-const VERSION = '1.3.3';
+const VERSION = '1.3.4';
 const CACHE = 'dxf-sketch-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 const EXTRA = ['./icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
@@ -28,7 +28,7 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('message', e => { if (e.data === 'skip') self.skipWaiting(); });
 
-// Cache first: the app opens instantly and with no signal. Updates arrive through the
+// Cache first: the app opens instantly and works offline, without an internet connection. Updates arrive through the
 // new service worker (the dot on About, then About › Update now).
 self.addEventListener('fetch', e => {
   const req = e.request;

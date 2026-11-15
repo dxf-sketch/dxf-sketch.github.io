@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.3.3-0696d7)
+![version](https://img.shields.io/badge/version-1.3.4-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -8,7 +8,7 @@ a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls
 outlets, water, drain and air) and furniture and equipment as your own blocks. The plan's bottom-left corner sits on 0,0,0.
 
 **Open on any device:** https://dtheofilopoulos.github.io/DXF-Sketch/
-then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: Install app). After the first visit it works with no signal and keeps everything on that device.
+then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: Install app). After the first visit it works offline, with no internet connection needed (Wi-Fi or mobile data), and keeps everything on that device.
 
 ## What it does
 

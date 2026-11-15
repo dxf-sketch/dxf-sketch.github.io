@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.3.4 — 15 Nov 2026
+- Wording: “works offline, no internet connection needed (Wi-Fi or mobile data)” instead of “works with no signal”.
+- General bug fixes.
+
 ## 1.3.3 — 15 Nov 2026
 - 3D: door, window and passage frames sit flush within the wall instead of poking through its faces, and passages get a proper frame like a door's, without the leaf.
 
