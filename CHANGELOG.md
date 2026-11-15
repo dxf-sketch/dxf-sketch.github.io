@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.4 — 15 Nov 2026
+
+- Wall hatch scale 20 by default.
+- Smaller room dimensions and names on screen.
+
 ## 1.7.3 — 15 Nov 2026
 
 - Removed Compare visits, Room schedule (CSV) and Plan to scale from Export.
