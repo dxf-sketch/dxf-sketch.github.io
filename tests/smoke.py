@@ -88,6 +88,60 @@ with sync_playwright() as p:
             check(n2[1] == 1, 'compare finds the new room')
             dxf2 = n2[2]
         pg.close()
+    # shared editing: two people, each with their own token, against a pretend GitHub
+    import json as _j, time as _t
+    gists, seq = {}, [0]
+    toks = {'ta': 'alice', 'tb': 'bob'}
+    def gh(route, req):
+        u = req.url.split('api.github.com')[1].split('?')[0]
+        tok = (req.headers.get('authorization') or '').replace('Bearer ', '')
+        def ok(o, st=200): route.fulfill(status=st, content_type='application/json', body=_j.dumps(o))
+        if u == '/user': return ok({'login': toks.get(tok, 'x')}) if tok in toks else ok({'message': 'Bad credentials'}, 401)
+        if u == '/gists' and req.method == 'POST':
+            seq[0] += 1; gid = 'G%d' % seq[0]; body = _j.loads(req.post_data)
+            gists[gid] = {'owner': tok, 'files': body['files'], 'at': _t.time()}
+            return ok({'id': gid, 'updated_at': '2026-11-15T10:00:%02dZ' % seq[0]}, 201)
+        gid = u.split('/')[2] if u.startswith('/gists/') else None
+        if gid not in gists: return ok({'message': 'Not Found'}, 404)
+        g = gists[gid]
+        if req.method == 'PATCH':
+            if g['owner'] != tok: return ok({'message': 'Not Found'}, 404)
+            g['files'].update(_j.loads(req.post_data)['files']); g['at'] = _t.time()
+        return ok({'id': gid, 'updated_at': '2026-11-15T10:%02d:00Z' % (int(g['at']) % 60), 'files': {k: {'content': v['content'], 'truncated': False} for k, v in g['files'].items()}})
+    gists['G0'] = {'owner': 'ta', 'files': {'dxf-sketch.json': {'content': '{}'}}, 'at': 0}
+    seq[0] = 0
+    def person(tok):
+        c = b.new_context(viewport={'width': 1180, 'height': 820})
+        c.route('https://api.github.com/**', gh)
+        c.route('https://ntfy.sh/**', lambda r: r.fulfill(status=200, body=''))
+        c.add_init_script("localStorage.setItem('dxf-sketch-gh','%s');localStorage.setItem('dxf-sketch-ghme',JSON.stringify({login:'%s'}));" % (tok, toks[tok]))
+        pg = c.new_page(); errs = []; pg.on('pageerror', lambda e, errs=errs: errs.append(str(e))); return c, pg, errs
+    T = 'window.__dxfTest'
+    ca, A, ea = person('ta')
+    A.goto(url); A.wait_for_timeout(600); A.evaluate(SAMPLE)
+    A.evaluate('async()=>{const T=%s,S=T.S;const r2=JSON.parse(JSON.stringify(S.p.rooms[0]));r2.id=T.uid();r2.name="Store";S.p.rooms.push(r2);S.p.live="G0";S.p.liveTopic="tp";T.save();await T.livePush();}' % T)
+    cb, B, eb = person('tb')
+    B.goto(url + '#live=G0'); B.wait_for_timeout(1200)
+    names = B.evaluate('()=>%s.S.p.rooms.map(r=>r.name).join(",")' % T)
+    check(names == 'Microbiology,Store', 'a shared project opens for someone else (%s)' % names)
+    B.wait_for_timeout(50)
+    B.evaluate('async()=>{const T=%s,S=T.S;T.commit(()=>{S.p.rooms[0].name="Micro B";});T.save();await T.livePush(S.p.id);await new Promise(r=>setTimeout(r,100));await T.livePush(S.p.id);}' % T)
+    mine = B.evaluate('()=>%s.S.p.myGist||""' % T)
+    check(mine.startswith('G') and gists[mine]['owner'] == 'tb', 'an editor’s changes go into a Gist on their own account')
+    A.evaluate('async()=>{const T=%s,S=T.S;T.commit(()=>{S.p.rooms[1].name="Store A";});S.p.contrib=[{gist:"%s"}];T.save();await T.coSync();await new Promise(r=>setTimeout(r,50));await T.livePush();}' % (T, mine))
+    names = A.evaluate('()=>%s.S.p.rooms.map(r=>r.name).join(",")' % T)
+    check(names == 'Micro B,Store A', 'the owner gets the editor’s change and keeps their own (%s)' % names)
+    B.evaluate('async()=>{const T=%s;await T.coSync();}' % T)
+    names = B.evaluate('()=>%s.S.p.rooms.map(r=>r.name).join(",")' % T)
+    check(names == 'Micro B,Store A', 'the editor gets the owner’s change (%s)' % names)
+    B.evaluate('async()=>{const T=%s,S=T.S;T.commit(()=>{S.p.rooms=S.p.rooms.filter(r=>r.name!=="Store A");});T.save();await new Promise(r=>setTimeout(r,50));await T.livePush(S.p.id);}' % T)
+    A.evaluate('async()=>{const T=%s;await T.coSync();}' % T)
+    names = A.evaluate('()=>%s.S.p.rooms.map(r=>r.name).join(",")' % T)
+    check(names == 'Micro B', 'a room deleted by an editor goes for the owner too (%s)' % names)
+    A.evaluate('()=>{const T=%s;T.A.sharesheet();}' % T); A.wait_for_timeout(100)
+    check('bob' in A.inner_text('#sheet') if A.query_selector('#sheet') else True, 'the owner sees who else is editing')
+    check(not ea and not eb, 'no script errors while editing together %s' % (ea + eb)[:2])
+    ca.close(); cb.close()
     b.close()
 srv.shutdown()
 

@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.4.0 — 15 Nov 2026
+
+- Editing together: people you share a live link with can edit too, each with their own GitHub token; changes are combined room by room and appear for everyone within a minute or so.
+
 ## 1.3.5 — 15 Nov 2026
 
 - Settings redesigned in the style of iOS: grouped rows with switches and segmented controls.
