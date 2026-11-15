@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.1 — 15 Nov 2026
+
+- Power boards in any size (room, sub, distribution and main boards to start from); each size is its own DXF block.
+
 ## 1.7.0 — 15 Nov 2026
 
 - Services: power board with its breakers; drawn to scale, in 3D, on elevations, in the schedule and survey, and in the DXF as the block Power Board.

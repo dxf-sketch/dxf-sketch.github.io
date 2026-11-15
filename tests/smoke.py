@@ -78,10 +78,10 @@ with sync_playwright() as p:
             check(re.search(r'(\w+)\.dxf,\1\.json', pj) is not None and pj.endswith('|1|true'), 'the DXF export saves the project file next to it (%s)' % pj)
             df = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,keep=JSON.stringify(S.p);try{S.p.floors=[S.p.floors[0]];S.p.labs.forEach(l=>l.floor=S.p.floors[0].id);T.A.delfloor();const ok=S.p.rooms.length>0&&S.p.labs.length>0&&S.p.floors.length>0;S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return ok;}catch(e){S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return String(e);}}')
             check(df is True, 'deleting the only floor leaves a room to draw in (%s)' % df)
-            pbd = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0];const q={id:T.uid(),kind:"pb",wall:r.walls[3].id,along:2000,off:0,val:"24"};r.points.push(q);T.render();const d=T.toDXF(S.p);const el=T.elevSVG(r,r.walls[3].id,true);r.points=r.points.filter(x=>x!==q);T.render();return [d,el.indexOf(">PB<")>0];}')
+            pbd = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0];const q={id:T.uid(),kind:"pb",wall:r.walls[3].id,along:2000,off:0,val:"24",bw:600,bd:200,bh:1000};r.points.push(q);T.render();const d=T.toDXF(S.p);const el=T.elevSVG(r,r.walls[3].id,true);r.points=r.points.filter(x=>x!==q);T.render();return [d,el.indexOf(">PB<")>0];}')
             pdoc, paud = recover.read(io.BytesIO(pbd[0].encode('utf-8')))
-            pins = [e for e in pdoc.modelspace().query('INSERT') if e.dxf.name == 'Power Board']
-            check(not paud.has_errors and len(pins) == 1 and pins[0].dxf.color == 2 and 'Power Board' in pdoc.blocks and any(e.dxf.text == 'PB 24 breakers' for e in pdoc.modelspace().query('TEXT')) and pbd[1], 'a power board exports as its own block with its breakers, and shows on the elevation')
+            pins = [e for e in pdoc.modelspace().query('INSERT') if e.dxf.name == 'Power Board 600x200']
+            check(not paud.has_errors and len(pins) == 1 and pins[0].dxf.color == 2 and 'Power Board 600x200' in pdoc.blocks and any(e.dxf.text == 'PB 24 breakers' for e in pdoc.modelspace().query('TEXT')) and pbd[1], 'a power board exports as a block of its own size (Power Board 600x200) with its breakers, and shows on the elevation')
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)
