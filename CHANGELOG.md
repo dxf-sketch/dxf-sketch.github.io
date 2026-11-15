@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.9.2 — 15 Nov 2026
+
+- Share redesigned; send by email or iMessage.
+
 ## 1.9.1 — 15 Nov 2026
 
 - Equipment reorganised: bench items, floor equipment as their own items (fridge, freezer, fume hood, biosafety cabinet, water system, R/O, PTS, UPS) and Analyzers.
