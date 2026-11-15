@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.13.0 — 16 Nov 2026
+
+- Each section selects only its own things; everything else is locked and faded.
+- Wall cabinets easy to select.
+- General bug fixes.
+
 ## 1.12.3 — 16 Nov 2026
 
 - Site Survey PDF: no issues list, one rooms and services table, one page per room.
