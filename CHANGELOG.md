@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.0 — 15 Nov 2026
+
+- Services: power board with its breakers; drawn to scale, in 3D, on elevations, in the schedule and survey, and in the DXF as the block Power Board.
+- Computers save through a Save dialog (site survey PDF included); phones and tablets keep the share sheet.
+- Links are copied instead of going through the system share sheet.
+
 ## 1.6.3 — 15 Nov 2026
 
 - Phones: one-row header, and the floor, laboratory and room switches fit the screen.
