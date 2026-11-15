@@ -2,6 +2,14 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.11.0 — 16 Nov 2026
+
+- Placing furniture over benches, outlets and beams works; wall cabinets stay on the wall, cabinets under the bench.
+- Wall cabinets and under-bench cabinets see-through on the plan.
+- Backups and live links paced and retried so GitHub limits no longer stop them.
+- Site survey in title case; Room schedule renamed Rooms Overview.
+- Experimental: plan from photos (Settings).
+
 ## 1.10.3 — 15 Nov 2026
 
 - Greek translation completed and reworded.

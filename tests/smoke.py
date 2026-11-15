@@ -95,10 +95,18 @@ with sync_playwright() as p:
             check('Χώρος' in gr and 'Τοίχοι' in gr, 'the interface switches to Greek (%s…)' % gr[:40].replace('\n', ' '))
             mp = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S;T.save();const a=S.p.id;S._pjnew=true;T.A.pjnew();S.p.name='Second';T.save();const b=S.p.id;T.A.pjnext('1');const c=S.p.id;T.A.pjnext('1');const d=S.p.id;T.A.pjclose(b);const e=S.p.id;return [a!==b,c===a,d===b,e===a].join(',');}""")
             check(mp == 'true,true,true,true', 'several projects open at once, cycled in order and closed (%s)' % mp)
+            pl = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],keep=JSON.stringify(S.p);T.A.step(6);T.render();
+              const svg=document.getElementById('svg'),m=svg.getScreenCTM(),sp=(x,y)=>{const p=svg.createSVGPoint();p.x=x;p.y=-y;const q=p.matrixTransform(m);return [q.x,q.y];};
+              const lay=S.G.layouts[r.id],w=lay.walls[0],P=(u,v)=>[w.A[0]+w.d[0]*u-w.n[0]*v,w.A[1]+w.d[1]*u-w.n[1]*v],out=[];
+              for(const [k,u] of [['wcab',1500],['bcab',3000]]){S.editFurn=null;S.dFurn.kind='';T.A.fkind(k);const q=sp(...P(u,150)),el=document.elementFromPoint(q[0],q[1]);
+                const o={bubbles:true,clientX:q[0],clientY:q[1],pointerId:1,isPrimary:true,pointerType:'touch'};el.dispatchEvent(new PointerEvent('pointerdown',o));el.dispatchEvent(new PointerEvent('pointerup',o));el.dispatchEvent(new MouseEvent('click',o));
+                const f=r.furn[r.furn.length-1];out.push(f.kind+':'+Math.round(f.off));}
+              S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;S.editFurn=null;T.render();return out.join(',');}""")
+            check(pl == 'wcab:0,bcab:0', 'a wall cabinet and a bench cabinet can be placed by tapping over a bench and its outlets, and stay against the wall (%s)' % pl)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)
-            check('Checklist' in sv and 'Site survey' in sv, 'site survey is made, with the checklist')
+            check('Checklist' in sv and ('Site survey' in sv or 'Site Survey' in sv), 'site survey is made, with the checklist')
             b64 = pg.evaluate('()=>%s.surveyPDF().then(b=>b.arrayBuffer()).then(a=>{let s="";const u=new Uint8Array(a);for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s);})' % T)
             import base64, pypdf
             rd = pypdf.PdfReader(io.BytesIO(base64.b64decode(b64)))
@@ -178,6 +186,22 @@ with sync_playwright() as p:
     check('bob' in A.inner_text('#sheet') if A.query_selector('#sheet') else True, 'the owner sees who else is editing')
     check(not ea and not eb, 'no script errors while editing together %s' % (ea + eb)[:2])
     ca.close(); cb.close()
+    # experimental: a room drawn from photos (the API answer is pretended)
+    import json as _j2
+    plan = {"walls":[{"length_mm":5200,"turn_deg":90},{"length_mm":3600,"turn_deg":90},{"length_mm":5200,"turn_deg":90},{"length_mm":3600,"turn_deg":0}],"openings":[{"type":"door","wall":2,"offset_mm":800,"width_mm":900}],"height_mm":2800,"confidence":"medium","notes":""}
+    cx = b.new_context(viewport={'width': 1180, 'height': 820})
+    cx.route('https://api.anthropic.com/**', lambda r: r.fulfill(status=200, content_type='application/json', body=_j2.dumps({"content":[{"type":"text","text":_j2.dumps(plan)}]})))
+    cx.add_init_script("localStorage.setItem('dxf-sketch-ak','sk-ant-test');localStorage.setItem('dxf-sketch-settings',JSON.stringify({exPhoto:true}));")
+    px = cx.new_page(); px.goto(url); px.wait_for_timeout(500)
+    import tempfile, struct, zlib
+    tmp = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+    raw = b''.join(b'\x00' + b'\x80\x80\x80' * 8 for _ in range(8))
+    def chunk(t, d): return struct.pack('>I', len(d)) + t + d + struct.pack('>I', zlib.crc32(t + d) & 0xffffffff)
+    tmp.write(b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', 8, 8, 8, 2, 0, 0, 0)) + chunk(b'IDAT', zlib.compress(raw)) + chunk(b'IEND', b'')); tmp.close()
+    px.set_input_files('#phin2', [tmp.name]); px.wait_for_timeout(1500)
+    fp = px.evaluate("()=>{const r=window.__dxfTest.S.p.rooms[0];return r.walls.map(w=>w.len).join(',')+'|'+r.openings.length+'|'+r.h}")
+    check(fp == '5200,3600,5200,3600|1|2800', 'experimental: a room is drawn from photos (%s)' % fp)
+    cx.close()
     b.close()
 srv.shutdown()
 
