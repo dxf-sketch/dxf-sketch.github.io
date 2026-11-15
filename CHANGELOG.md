@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.5 — 15 Nov 2026
+
+- General bug fixes.
+
 ## 1.7.4 — 15 Nov 2026
 
 - Wall hatch scale 20 by default.
