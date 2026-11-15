@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.4.3 — 15 Nov 2026
+
+- Saving through the share sheet no longer adds a Text.txt next to the file.
+- General bug fixes.
+
 ## 1.4.2 — 15 Nov 2026
 
 - Editing together: when two people change the same room, you are asked which version to keep instead of the later change winning.
