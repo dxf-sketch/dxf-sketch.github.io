@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.4.1-0696d7)
+![version](https://img.shields.io/badge/version-1.4.2-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -27,7 +27,7 @@ Also:
 
 - **New, Open, Save, Save as** buttons in the header (a File menu on phones, also with open a project file, save to a file and recent projects); ⌘/Ctrl+S, ⌘/Ctrl+Shift+S, ⌘/Ctrl+O.
 - **Units** in Settings: metric (whole millimetres, m²) by default, or feet and inches.
-- **Share** (header): send by email a link that always opens the latest version, either a person's own link or one for anyone; see who you shared with and who has it open now (green dot). Anyone you share with can edit too, with their own GitHub token: their changes go into a Gist on their own account and are combined room by room for everyone. Kept in secret GitHub Gists; needs a GitHub token with the gist scope in Settings.
+- **Share** (header): send by email a link that always opens the latest version, either a person's own link or one for anyone; see who you shared with and who has it open now (green dot). Anyone you share with can edit too, with their own GitHub token: their changes go into a Gist on their own account and are combined room by room for everyone, and if two people change the same room you are asked which version to keep. Kept in secret GitHub Gists; needs a GitHub token with the gist scope in Settings.
 - **Floors**, **wall elevations**, **heights** (services, windows, false ceilings), **equipment needs** checked against the services placed, **room templates**, an existing **DXF as an underlay** to trace over, **compare with an earlier visit**, and a **site checklist** per room.
 - **Backups** to a private GitHub Gist as you work, a storage meter in Settings, and **Plan to scale** (1:50 on A4/A3) for printing or PDF.
 - **Photos and notes** per room, kept on the device and carried in the project file and site survey.

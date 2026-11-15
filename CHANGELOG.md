@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.4.2 — 15 Nov 2026
+
+- Editing together: when two people change the same room, you are asked which version to keep instead of the later change winning.
+
 ## 1.4.1 — 15 Nov 2026
 
 - App icons are now SVG.
