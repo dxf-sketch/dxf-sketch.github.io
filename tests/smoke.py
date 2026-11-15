@@ -66,7 +66,6 @@ with sync_playwright() as p:
         check(not errs, 'no script errors at %dx%d %s' % (vp[0], vp[1], errs[:2] if errs else ''))
         if vp[0] == 1180:
             dxf = pg.evaluate('()=>window.__dxfTest.toDXF(window.__dxfTest.S.p)')
-            plan = pg.evaluate('()=>window.__dxfTest.planPrintHTML()')
             T = 'window.__dxfTest'
             el = pg.evaluate('()=>{const T=%s,r=T.S.p.rooms[0];return r.walls.map(w=>T.elevSVG(r,w.id,true).length)}' % T)
             check(all(n > 500 for n in el), 'an elevation for every wall')
@@ -95,9 +94,8 @@ with sync_playwright() as p:
             n2 = pg.evaluate('''()=>{const T=%s,S=T.S,r=S.p.rooms[0],t=T.tplFrom(r,'t');const before=JSON.parse(JSON.stringify(S.p));
               T.A.addfloor=T.A.addfloor;const fid=T.uid(),lid=T.uid();S.p.floors.push({id:fid,name:'1st floor'});S.p.labs.push({id:lid,name:'Lab B',floor:fid});
               const r2=JSON.parse(JSON.stringify(r));r2.id=T.uid();r2.lab=lid;r2.furn=[];r2.points=[];r2.num='13';S.p.rooms.push(r2);S.room=r2.id;T.tplApply(r2,t);
-              const rows=T.compareRows(before,S.p);return [r2.furn.length+r2.points.length,rows.filter(x=>x.st==='new').length,T.toDXF(S.p)];}''' % T)
+              return [r2.furn.length+r2.points.length,0,T.toDXF(S.p)];}''' % T)
             check(n2[0] > 5, 'a template fills another room (%d items)' % n2[0])
-            check(n2[1] == 1, 'compare finds the new room')
             dxf2 = n2[2]
         pg.close()
     # shared editing: two people, each with their own token, against a pretend GitHub
@@ -185,7 +183,6 @@ for e in msp.query('LWPOLYLINE'):
     for q in e.get_points('xy'):
         xs.append(q[0]); ys.append(q[1])
 check(abs(min(xs)) < 0.01 and abs(min(ys)) < 0.01, 'plan starts at 0,0 (min %.2f, %.2f)' % (min(xs), min(ys)))
-check('1:' in plan and '<svg' in plan, 'plan to scale is made')
 bl = [e for e in msp if e.dxf.layer == 'Room Beams']
 lay = doc.layers.get('Room Beams') if 'Room Beams' in doc.layers else None
 check(lay is not None and lay.color == 125 and lay.dxf.linetype.upper() == 'DASHED2', 'layer Room Beams: colour 125, dashed')

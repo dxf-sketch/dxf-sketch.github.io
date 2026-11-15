@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.7.2-0696d7)
+![version](https://img.shields.io/badge/version-1.7.3-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -21,15 +21,15 @@ then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: In
 | 5 Services | Electrical outlets 1P, 1P UPS and 3P UPS, power boards with their breakers, network outlets (RJ45), water supply, drain and air supply: tap the wall, a pillar or a shaft. Exported as your blocks on layer Room, each in its own colour (electrical outlets yellow, network outlets cyan, water blue, drain red, air orange) |
 | 6 Furniture | Benches at any size, bench cabinets, bench drawers, wall cabinets, chairs, stools, bins. On layer Room in colour 125 |
 | 7 Equipment | PCs, printers, sinks, racks, centrifuges, reverse osmosis and named equipment. On layer Room in colour 125 |
-| 8 Export | DXF, a site survey as PDF (plan, room schedule, notes, photos), a plan to scale, a plan picture, a room schedule (CSV) and a comparison with an earlier visit |
+| 8 Export | DXF with its project file, a site survey as PDF (plan, room schedule, notes, photos) and a plan picture |
 
 Also:
 
 - **New, Open, Save, Save as** buttons in the header (a File menu on phones, also with open a project file, save to a file and recent projects); ⌘/Ctrl+S, ⌘/Ctrl+Shift+S, ⌘/Ctrl+O.
 - **Units** in Settings: metric (whole millimetres, m²) by default, or feet and inches.
 - **Share** (header): send by email a link that always opens the latest version, either a person's own link or one for anyone; see who you shared with and who has it open now (green dot). Anyone you share with can edit too, with their own GitHub token: their changes go into a Gist on their own account and are combined room by room for everyone, and if two people change the same room you are asked which version to keep. Kept in secret GitHub Gists; needs a GitHub token with the gist scope in Settings.
-- **Floors**, **wall elevations**, **heights** (services, windows, false ceilings), **equipment needs** checked against the services placed, **room templates**, an existing **DXF as an underlay** to trace over, **compare with an earlier visit**, and a **site checklist** per room.
-- **Backups** to a private GitHub Gist as you work, a storage meter in Settings, and **Plan to scale** (1:50 on A4/A3) for printing or PDF.
+- **Floors**, **wall elevations**, **heights** (services, windows, false ceilings), **equipment needs** checked against the services placed, **room templates**, an existing **DXF as an underlay** to trace over, and a **site checklist** per room.
+- **Backups** to a private GitHub Gist as you work, and a storage meter in Settings.
 - **Photos and notes** per room, kept on the device and carried in the project file and site survey.
 - Light and dark themes, undo and redo, several projects per device, screen stays on while you work.
 

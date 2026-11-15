@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.3 — 15 Nov 2026
+
+- Removed Compare visits, Room schedule (CSV) and Plan to scale from Export.
+- General bug fixes.
+
 ## 1.7.2 — 15 Nov 2026
 
 - Power boards snap to either side of a wall (this room or the other side).
