@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.5 — 15 Nov 2026
+
+- Splash screen on opening; footer shows what it is made with and links to the source.
+
 ## 1.8.4 — 15 Nov 2026
 
 - Save and Save as in the project menu; DXF Sketch at the top left opens Home.
