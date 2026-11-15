@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.2 — 15 Nov 2026
+
+- The custom-size Equipment piece is now called Analyzer.
+
 ## 1.8.1 — 15 Nov 2026
 
 - Equipment: PTS replaces the sample rack, UPS added (both as DXF blocks); reverse osmosis shown as R/O.
