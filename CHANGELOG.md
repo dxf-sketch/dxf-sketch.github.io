@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.3 — 15 Nov 2026
+
+- General bug fixes.
+
 ## 1.8.2 — 15 Nov 2026
 
 - The custom-size Equipment piece is now called Analyzer.
