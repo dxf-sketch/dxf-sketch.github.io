@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.10.0 — 15 Nov 2026
+
+- Library to add furniture and equipment: tiles by group, search, recently used.
+- New project asks for site, initials and version.
+
 ## 1.9.6 — 15 Nov 2026
 
 - Equipment: chemicals cabinet.
