@@ -2,6 +2,9 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.3.2 — 15 Nov 2026
+- 3D shows doors, windows and passages properly: doors with their frame and the leaf (or both leaves of a double door) standing open the way they swing on the plan; windows with a frame all round, a mullion on wide ones, glass and an inside sill; passages with a lining round the opening.
+
 ## 1.3.1 — 15 Nov 2026
 - DXF: each beam is now one closed dashed polyline (its outline, ends on the wall faces) instead of two separate lines, so it can be picked, moved and stretched in AutoCAD as one object. The dash pattern runs continuously round its corners.
 
