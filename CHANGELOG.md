@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.4.1 — 15 Nov 2026
+
+- App icons are now SVG.
+- General bug fixes.
+
 ## 1.4.0 — 15 Nov 2026
 
 - Editing together: people you share a live link with can edit too, each with their own GitHub token; changes are combined room by room and appear for everyone within a minute or so.
