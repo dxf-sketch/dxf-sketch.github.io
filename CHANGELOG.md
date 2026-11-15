@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.6 — 15 Nov 2026
+
+- Power boards: tap near any wall, inside or outside, or drag to any wall and side.
+
 ## 1.7.5 — 15 Nov 2026
 
 - General bug fixes.
