@@ -93,6 +93,8 @@ with sync_playwright() as p:
             check(not uaud.has_errors and names == ['PTS', 'UPS'] and 'PTS' in udoc.blocks and 'UPS' in udoc.blocks, 'PTS and UPS export as blocks of their own (%s)' % names)
             gr = pg.evaluate("""()=>{const T=window.__dxfTest;T.A.lang('el');T.A.step(1);T.render();return new Promise(r=>setTimeout(()=>{const t=document.querySelector('#dock').innerText+'|'+document.querySelector('.panel').innerText.slice(0,200);T.A.lang('en');r(t);},200));}""")
             check('Χώρος' in gr and 'Τοίχοι' in gr, 'the interface switches to Greek (%s…)' % gr[:40].replace('\n', ' '))
+            mp = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S;T.save();const a=S.p.id;T.A.pjnew();S.p.name='Second';T.save();const b=S.p.id;T.A.pjnext('1');const c=S.p.id;T.A.pjnext('1');const d=S.p.id;T.A.pjclose(b);const e=S.p.id;return [a!==b,c===a,d===b,e===a].join(',');}""")
+            check(mp == 'true,true,true,true', 'several projects open at once, cycled in order and closed (%s)' % mp)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)
