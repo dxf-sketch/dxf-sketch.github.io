@@ -103,6 +103,12 @@ with sync_playwright() as p:
                 const f=r.furn[r.furn.length-1];out.push(f.kind+':'+Math.round(f.off));}
               S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;S.editFurn=null;T.render();return out.join(',');}""")
             check(pl == 'wcab:0,bcab:0', 'a wall cabinet and a bench cabinet can be placed by tapping over a bench and its outlets, and stay against the wall (%s)' % pl)
+            two = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],keep=JSON.stringify(S.p);T.A.step(5);T.A.ptkind('rj');T.render();
+              const svg=document.getElementById('svg'),sp=(x,y)=>{const m=svg.getScreenCTM(),p=svg.createSVGPoint();p.x=x;p.y=-y;const q=p.matrixTransform(m);return [q.x,q.y];};
+              const w=S.G.layouts[r.id].walls[2],n0=r.points.length,tapAt=u=>{const P=[w.A[0]+w.d[0]*u+w.n[0]*75,w.A[1]+w.d[1]*u+w.n[1]*75],q=sp(...P),el=document.elementFromPoint(q[0],q[1]),o={bubbles:true,clientX:q[0],clientY:q[1],pointerId:2,isPrimary:true,pointerType:'touch'};
+                el.dispatchEvent(new PointerEvent('pointerdown',o));el.dispatchEvent(new PointerEvent('pointerup',o));el.dispatchEvent(new MouseEvent('click',o));};
+              tapAt(1000);tapAt(2500);tapAt(4000);const n=r.points.length-n0;S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;S.editPt=null;T.render();return n;}""")
+            check(two == 3, 'three taps on a wall add three outlets in a row, the tool staying picked (%s added)' % two)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)

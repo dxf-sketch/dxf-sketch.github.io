@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.11.1 — 16 Nov 2026
+
+- The tool stays picked: each tap adds another door, outlet, pillar or piece of furniture.
+- Clearer hints and messages.
+- General bug fixes.
+
 ## 1.11.0 — 16 Nov 2026
 
 - Placing furniture over benches, outlets and beams works; wall cabinets stay on the wall, cabinets under the bench.
