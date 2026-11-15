@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.9.0 — 15 Nov 2026
+
+- English or Greek interface (Settings › General › Language).
+- Footer simplified; the Key is in the right-hand toolbar.
+- Clearer overlapping-openings warning.
+
 ## 1.8.9 — 15 Nov 2026
 
 - General bug fixes.

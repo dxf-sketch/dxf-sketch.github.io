@@ -91,6 +91,8 @@ with sync_playwright() as p:
             udoc, uaud = recover.read(io.BytesIO(pu.encode('utf-8')))
             names = sorted(e.dxf.name for e in udoc.modelspace().query('INSERT') if e.dxf.name in ('PTS', 'UPS'))
             check(not uaud.has_errors and names == ['PTS', 'UPS'] and 'PTS' in udoc.blocks and 'UPS' in udoc.blocks, 'PTS and UPS export as blocks of their own (%s)' % names)
+            gr = pg.evaluate("""()=>{const T=window.__dxfTest;T.A.lang('el');T.A.step(1);T.render();return new Promise(r=>setTimeout(()=>{const t=document.querySelector('#dock').innerText+'|'+document.querySelector('.panel').innerText.slice(0,200);T.A.lang('en');r(t);},200));}""")
+            check('Χώρος' in gr and 'Τοίχοι' in gr, 'the interface switches to Greek (%s…)' % gr[:40].replace('\n', ' '))
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)
