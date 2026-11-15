@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.6.2 — 15 Nov 2026
+
+- 3D: empty floors below yours get the outside walls and windows of your floor.
+
 ## 1.6.1 — 15 Nov 2026
 
 - 3D shows the floors below yours, even empty ones, as a named stack.
