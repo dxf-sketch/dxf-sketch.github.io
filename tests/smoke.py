@@ -109,7 +109,8 @@ check('1:' in plan and '<svg' in plan, 'plan to scale is made')
 bl = [e for e in msp if e.dxf.layer == 'Room Beams']
 lay = doc.layers.get('Room Beams') if 'Room Beams' in doc.layers else None
 check(lay is not None and lay.color == 125 and lay.dxf.linetype.upper() == 'DASHED2', 'layer Room Beams: colour 125, dashed')
-check(sum(1 for e in bl if e.dxftype() == 'LINE') == 2 and any(e.dxftype() == 'TEXT' and 'u/s' in e.dxf.text for e in bl), 'a beam exports as two dashed lines and its underside height')
+pl = [e for e in bl if e.dxftype() == 'LWPOLYLINE']
+check(len(pl) == 1 and pl[0].closed and len(pl[0]) == 4 and any(e.dxftype() == 'TEXT' and 'u/s' in e.dxf.text for e in bl), 'a beam exports as one closed dashed polyline and its underside height')
 doc2, aud2 = recover.read(io.BytesIO(dxf2.encode('utf-8')))
 check(not aud2.has_errors and any(e.dxftype() == 'TEXT' and e.dxf.text == '1st floor' for e in doc2.modelspace()), 'two floors export, each named')
 
