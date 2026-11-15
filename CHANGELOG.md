@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.9 — 15 Nov 2026
+
+- General bug fixes.
+
 ## 1.8.8 — 15 Nov 2026
 
 - Consistent type scale throughout.
