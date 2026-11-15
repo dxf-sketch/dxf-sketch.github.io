@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.3.0 — 15 Nov 2026
+- Ceiling beams (in Pillars): pick Beam, tap the wall where it starts and then the wall opposite; with Ortho on it runs square to the first wall. Give it its width and underside height. It is drawn as two dashed lines with “u/s” and its height, hangs from the ceiling in 3D, shows in section on the wall elevations, and the site survey gives each room's lowest clear height and warns when tall furniture stands under a lower beam.
+- DXF: beams go on a new layer, Room Beams, colour 125 with a dashed linetype: two lines for the beam's width and the text “BEAM 300 u/s +2.40”.
+
 ## 1.2.2 — 14 Nov 2026
 - Floors have a number: set which floor you are on (for example the 3rd), and the ground, 1st and 2nd floors are listed below it, empty, until you work on them. The floor you pick is the one you work on; floors are listed top to bottom, can be added above or below, and their names follow their number unless you rename them.
 - General bug fixes.

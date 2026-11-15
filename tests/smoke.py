@@ -38,6 +38,7 @@ SAMPLE = '''()=>{const T=window.__dxfTest,{S,render,uid,FURN}=T;const r=S.p.room
   const W=(l,t)=>({id:uid(),len:l,turn:t,t:null,m:null});r.walls=[W(6000,0),W(4000,90),W(6000,90),W(4000,90)];const w=r.walls.map(x=>x.id);
   r.openings=[{id:uid(),type:'door',wall:w[2],off:1500,w:1000,leaves:1,swing:'in'},{id:uid(),type:'window',wall:w[1],off:800,w:1500}];
   r.items=[{id:uid(),kind:'pillar',shape:'rect',wall:w[1],along:2800,w:400,d:400,off:0}];
+  r.beams=[{id:uid(),a:{wall:w[0],u:3000},b:{wall:w[2],u:3000},w:300,us:2400}];
   r.points=['s1p','s1u','rj','water','drain','air'].map((k,i)=>({id:uid(),kind:k,wall:w[0],along:600+i*800,off:0}));
   const F=(k,wall,al,o,x)=>Object.assign({id:uid(),kind:k,wall:wall,along:al,off:o||0,rot:FURN[k].rot||0},x||{});
   r.furn=[F('bench',w[0],200,0,{w:4000,d:700}),F('pc',w[0],500,0),F('sink',w[0],2600,0),F('bcab',w[0],700,0),F('osmo',w[2],4200,0),F('equip',w[3],500,0,{w:600,d:650,name:'Fridge'})];
@@ -105,6 +106,10 @@ for e in msp.query('LWPOLYLINE'):
         xs.append(q[0]); ys.append(q[1])
 check(abs(min(xs)) < 0.01 and abs(min(ys)) < 0.01, 'plan starts at 0,0 (min %.2f, %.2f)' % (min(xs), min(ys)))
 check('1:' in plan and '<svg' in plan, 'plan to scale is made')
+bl = [e for e in msp if e.dxf.layer == 'Room Beams']
+lay = doc.layers.get('Room Beams') if 'Room Beams' in doc.layers else None
+check(lay is not None and lay.color == 125 and lay.dxf.linetype.upper() == 'DASHED2', 'layer Room Beams: colour 125, dashed')
+check(sum(1 for e in bl if e.dxftype() == 'LINE') == 2 and any(e.dxftype() == 'TEXT' and 'u/s' in e.dxf.text for e in bl), 'a beam exports as two dashed lines and its underside height')
 doc2, aud2 = recover.read(io.BytesIO(dxf2.encode('utf-8')))
 check(not aud2.has_errors and any(e.dxftype() == 'TEXT' and e.dxf.text == '1st floor' for e in doc2.modelspace()), 'two floors export, each named')
 
