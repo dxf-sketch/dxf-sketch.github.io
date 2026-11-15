@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.8 — 15 Nov 2026
+
+- Consistent type scale throughout.
+- Step tabs: tap to open the panel, tap again to fold it away.
+
 ## 1.8.7 — 15 Nov 2026
 
 - Footer rethought: room and area, save and backup status, made-with icons, source, version.
