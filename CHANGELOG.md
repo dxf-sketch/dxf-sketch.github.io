@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.9.4 — 15 Nov 2026
+
+- General bug fixes.
+
 ## 1.9.3 — 15 Nov 2026
 
 - Several projects open at once; cycle through them from the breadcrumb (⇄) or with Alt+→ / Alt+←.
