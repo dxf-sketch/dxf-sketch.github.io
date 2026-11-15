@@ -87,6 +87,10 @@ with sync_playwright() as p:
               const W=(l,t)=>({id:T.uid(),len:l,turn:t,t:null,m:null});S.p.rooms.push({id:T.uid(),lab:r.lab,name:'Corridor',nameGr:'',num:'',t:200,m:'masonry',walls:[W(3000,0),W(4000,90),W(3000,90),W(4000,90)],openings:[],items:[],points:[],furn:[],place:{mode:'free',x:-3200,y:0,rot:0}});
               r.points.push({id:'nbpb',kind:'pb',wall:r.walls[3].id,along:2000,off:0,side:'out'});T.render();const g=S.G.points.find(x=>x.id==='nbpb');const x=Math.round(g.p[0]);S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return x;}""")
             check(nb == -200, 'a board on the far side clears the wall of the room next door too (face at x=%s, expected -200)' % nb)
+            pu = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],w=r.walls.map(x=>x.id);const keep=r.furn.slice();r.furn.push({id:'pt1',kind:'pts',wall:w[1],along:1500,off:0,rot:0,w:500,d:400},{id:'up1',kind:'ups',wall:w[2],along:1000,off:0,rot:0,w:600,d:800});T.render();const d=T.toDXF(S.p);r.furn=keep;T.render();return d;}""")
+            udoc, uaud = recover.read(io.BytesIO(pu.encode('utf-8')))
+            names = sorted(e.dxf.name for e in udoc.modelspace().query('INSERT') if e.dxf.name in ('PTS', 'UPS'))
+            check(not uaud.has_errors and names == ['PTS', 'UPS'] and 'PTS' in udoc.blocks and 'UPS' in udoc.blocks, 'PTS and UPS export as blocks of their own (%s)' % names)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)

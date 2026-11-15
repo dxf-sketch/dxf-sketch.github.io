@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.1 — 15 Nov 2026
+
+- Equipment: PTS replaces the sample rack, UPS added (both as DXF blocks); reverse osmosis shown as R/O.
+- Hints show as a short message instead of widening the choices bar.
+
 ## 1.8.0 — 15 Nov 2026
 
 - Breadcrumb: project › floor › room, with a project menu to switch sites; departments show only when a floor has more than one.

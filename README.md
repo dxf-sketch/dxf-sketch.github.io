@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.8.0-0696d7)
+![version](https://img.shields.io/badge/version-1.8.1-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -20,7 +20,7 @@ then add it to the Home Screen (Safari: Share › Add to Home Screen; Chrome: In
 | 4 Pillars, shafts & beams | Pillars and shafts anywhere in the room, snapping to walls, corners and each other; ceiling beams from wall to wall with their width and underside height (a closed dashed polyline on layer Room Beams, colour 125) |
 | 5 Services | Electrical outlets 1P, 1P UPS and 3P UPS, power boards with their breakers, network outlets (RJ45), water supply, drain and air supply: tap the wall, a pillar or a shaft. Exported as your blocks on layer Room, each in its own colour (electrical outlets yellow, network outlets cyan, water blue, drain red, air orange) |
 | 6 Furniture | Benches at any size, bench cabinets, bench drawers, wall cabinets, chairs, stools, bins. On layer Room in colour 125 |
-| 7 Equipment | PCs, printers, sinks, racks, centrifuges, reverse osmosis and named equipment. On layer Room in colour 125 |
+| 7 Equipment | PCs, printers, sinks, centrifuges, R/O (reverse osmosis), PTS (pneumatic tube station), UPS and named equipment; PTS and UPS go into the DXF as blocks of their own. On layer Room in colour 125 |
 | 8 Export | DXF with its project file, a site survey as PDF (plan, room schedule, notes, photos) and a plan picture |
 
 Also:
