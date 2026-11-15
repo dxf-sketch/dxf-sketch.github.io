@@ -2,6 +2,9 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.3.3 — 15 Nov 2026
+- 3D: door, window and passage frames sit flush within the wall instead of poking through its faces, and passages get a proper frame like a door's, without the leaf.
+
 ## 1.3.2 — 15 Nov 2026
 - 3D shows doors, windows and passages properly: doors with their frame and the leaf (or both leaves of a double door) standing open the way they swing on the plan; windows with a frame all round, a mullion on wide ones, glass and an inside sill; passages with a lining round the opening.
 
