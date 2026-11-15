@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.12.3 — 16 Nov 2026
+
+- Site Survey PDF: no issues list, one rooms and services table, one page per room.
+- General bug fixes.
+
 ## 1.12.2 — 16 Nov 2026
 
 - Selecting fixed: a tap on anything selects it unless you are adding things.
