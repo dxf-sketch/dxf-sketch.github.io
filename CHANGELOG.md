@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.10.1 — 15 Nov 2026
+
+- New project wizard: floor, first room and a plan to start from.
+
 ## 1.10.0 — 15 Nov 2026
 
 - Library to add furniture and equipment: tiles by group, search, recently used.
