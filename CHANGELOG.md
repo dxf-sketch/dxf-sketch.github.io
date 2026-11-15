@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.12.1 — 16 Nov 2026
+
+- Add photos already on the device, not only new ones.
+- Photos button in the top bar and in the Room panel.
+- General bug fixes.
+
 ## 1.12.0 — 16 Nov 2026
 
 - Site Survey PDF rebuilt as a professional survey report: plans to scale with title block, rooms and services schedules, a data sheet per room, issues and actions, and sign-off.
