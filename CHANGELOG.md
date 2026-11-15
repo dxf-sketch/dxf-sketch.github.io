@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.2 — 15 Nov 2026
+
+- Power boards snap to either side of a wall (this room or the other side).
+
 ## 1.7.1 — 15 Nov 2026
 
 - Power boards in any size (room, sub, distribution and main boards to start from); each size is its own DXF block.
