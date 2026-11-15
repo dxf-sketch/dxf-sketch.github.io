@@ -83,6 +83,10 @@ with sync_playwright() as p:
             check(not paud.has_errors and len(pins) == 1 and pins[0].dxf.color == 2 and 'Power Board 600x200' in pdoc.blocks and any(e.dxf.text == 'PB 24 breakers' for e in pdoc.modelspace().query('TEXT')) and pbd[1], 'a power board exports as a block of its own size (Power Board 600x200) with its breakers, and shows on the elevation')
             sd = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],w=r.walls[3];const q={id:T.uid(),kind:"pb",wall:w.id,along:1000,off:0,side:"out",bw:360,bd:100,bh:450};r.points.push(q);T.render();const L=S.G.layouts[r.id].walls.find(x=>x.id===w.id),g=S.G.points.find(x=>x.id===q.id);const inner=[0,1].map(i=>0);const d=T.toDXF(S.p);r.points=r.points.filter(x=>x!==q);T.render();const a=g.rot*Math.PI/180,n=[-Math.sin(a),Math.cos(a)],c=[(L.A[0]+L.B[0])/2,(L.A[1]+L.B[1])/2];return [Math.round(Math.abs((g.p[0]-L.A[0])*L.n[0]+(g.p[1]-L.A[1])*L.n[1])),d.indexOf("Power Board 360x100")>0];}')
             check(sd[1] and sd[0] > 50, 'a power board on the other side of the wall sits on its far face (%s mm off the inside face), as its own size block' % sd[0])
+            nb = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S,keep=JSON.stringify(S.p),r=S.p.rooms[0];r.place={mode:'free',x:0,y:0,rot:0};
+              const W=(l,t)=>({id:T.uid(),len:l,turn:t,t:null,m:null});S.p.rooms.push({id:T.uid(),lab:r.lab,name:'Corridor',nameGr:'',num:'',t:200,m:'masonry',walls:[W(3000,0),W(4000,90),W(3000,90),W(4000,90)],openings:[],items:[],points:[],furn:[],place:{mode:'free',x:-3200,y:0,rot:0}});
+              r.points.push({id:'nbpb',kind:'pb',wall:r.walls[3].id,along:2000,off:0,side:'out'});T.render();const g=S.G.points.find(x=>x.id==='nbpb');const x=Math.round(g.p[0]);S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return x;}""")
+            check(nb == -200, 'a board on the far side clears the wall of the room next door too (face at x=%s, expected -200)' % nb)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)
