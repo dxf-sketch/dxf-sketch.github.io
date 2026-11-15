@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.8.7 — 15 Nov 2026
+
+- Footer rethought: room and area, save and backup status, made-with icons, source, version.
+
 ## 1.8.6 — 15 Nov 2026
 
 - Tidier footer with made-with tags, source link, version and ©.
