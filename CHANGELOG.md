@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.7.8 — 15 Nov 2026
+
+- General bug fixes.
+
 ## 1.7.7 — 15 Nov 2026
 
 - Power boards stay out of the walls, against the outer line of the hatch.
