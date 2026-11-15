@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.6.0 — 15 Nov 2026
+
+- The DXF export saves the project file (.json) next to it, under the same name, to open later and carry on.
+- Opening a project file already on the device asks whether to carry on from it or open a copy.
+- On computers, the project file in the export folder is kept up to date as you work.
+
 ## 1.5.0 — 15 Nov 2026
 
 - Where exports go: ask each time (share sheet), straight into a folder you pick (DXF by default, OneDrive folders too; Chrome and Edge on computers), or Downloads.
