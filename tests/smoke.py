@@ -72,6 +72,8 @@ with sync_playwright() as p:
             check(all(n > 500 for n in el), 'an elevation for every wall')
             nd = pg.evaluate('()=>%s.roomNeeds(%s.S.p.rooms[0]).map(x=>x.k+":"+x.need+"/"+x.have)' % (T, T))
             check(any(x.startswith('rj:') for x in nd) and any(x.startswith('water:') for x in nd), 'equipment needs counted ' + ', '.join(nd))
+            fd = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});T.DIR.h=d;T.DIR.name="DXF";const was=T.ST.exp;T.ST.exp="folder";T.download("t.dxf","0 EOF","application/dxf");await new Promise(r=>setTimeout(r,400));T.ST.exp=was;const f=await (await d.getFileHandle("t.dxf")).getFile();return (await f.text()).length+"|"+T.S.msg;}')
+            check(fd.startswith('5|Saved t.dxf in DXF'), 'exports can go straight into a chosen folder (%s)' % fd)
             back = pg.evaluate('(d)=>%s.dxfSegs(d).segs.length' % T, dxf)
             check(back > 20, 'a DXF reads back in as an underlay (%d lines)' % back)
             sv = pg.evaluate('()=>%s.siteReport()' % T)

@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.5.0 — 15 Nov 2026
+
+- Where exports go: ask each time (share sheet), straight into a folder you pick (DXF by default, OneDrive folders too; Chrome and Edge on computers), or Downloads.
+
 ## 1.4.3 — 15 Nov 2026
 
 - Saving through the share sheet no longer adds a Text.txt next to the file.
