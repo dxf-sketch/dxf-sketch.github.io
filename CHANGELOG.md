@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.12.0 — 16 Nov 2026
+
+- Site Survey PDF rebuilt as a professional survey report: plans to scale with title block, rooms and services schedules, a data sheet per room, issues and actions, and sign-off.
+- General bug fixes.
+
 ## 1.11.1 — 16 Nov 2026
 
 - The tool stays picked: each tap adds another door, outlet, pillar or piece of furniture.
