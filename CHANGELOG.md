@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.13.1 — 16 Nov 2026
+
+- Selecting fixed: symbols and wall strips no longer take taps meant for furniture.
+- Taps with a small wobble select instead of moving.
+- General bug fixes.
+
 ## 1.13.0 — 16 Nov 2026
 
 - Each section selects only its own things; everything else is locked and faded.
