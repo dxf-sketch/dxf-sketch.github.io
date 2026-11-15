@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.3.5 — 15 Nov 2026
+
+- Settings redesigned in the style of iOS: grouped rows with switches and segmented controls.
+
 ## 1.3.4 — 15 Nov 2026
 - Wording: “works offline, no internet connection needed (Wi-Fi or mobile data)” instead of “works with no signal”.
 - General bug fixes.
