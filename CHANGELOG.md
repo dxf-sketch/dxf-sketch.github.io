@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.10.3 — 15 Nov 2026
+
+- Greek translation completed and reworded.
+- General bug fixes.
+
 ## 1.10.2 — 15 Nov 2026
 
 - General bug fixes.
