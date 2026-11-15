@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.9.5 — 15 Nov 2026
+
+- Delete this project from the project menu.
+
 ## 1.9.4 — 15 Nov 2026
 
 - General bug fixes.
