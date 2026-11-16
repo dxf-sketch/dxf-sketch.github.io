@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.16.0 — 16 Nov 2026
+
+- Photo pins on the plan and in the Site Survey.
+- General bug fixes.
+
 ## 1.15.0 — 16 Nov 2026
 
 - Analyzer models library (biochemistry, immunology, hematology, coagulation, urinalysis) at published sizes, with typical services.
