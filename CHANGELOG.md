@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.22.0 — 16 Nov 2026
+
+- Siemens Healthineers analyzers in the library: Atellica, Dimension, ADVIA, IMMULITE, Atellica HEMA, COAG 360 and Atellica 1500.
+
 ## 1.21.0 — 16 Nov 2026
 
 - New look on iPad and computers: full-screen plan with floating bars, a step dock at the bottom and a floating side card.
