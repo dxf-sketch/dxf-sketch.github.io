@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.55.0 — 16 Nov 2026
+
+- Show / hide photo angles on the sketch: a camera button in the tools column (it appears once a photo is pinned on the plan). The site survey still shows them.
+- General bug fixes
+
 ## 1.54.0 — 16 Nov 2026
 
 - Photos: tap one to open it full screen, then swipe or use the arrows to go through every photo of the project. Each shows its room and wall.
