@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.41.0 — 16 Nov 2026
+
+- + at the bottom left, in line with the step bar.
+- Lighter step bar: number or tick and name.
+- General bug fixes.
+
 ## 1.40.0 — 16 Nov 2026
 
 - Devices now meet in one shared backup and read all earlier ones.
