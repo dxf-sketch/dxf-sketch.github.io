@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.28.0 — 16 Nov 2026
+
+- Atellica configuration: Solution (CH and IM analyzers) or CI, one per configuration.
+- CI with Rack Handler, or for the Sample Handler with Sealer and Decapper (AIA).
+- Decapper after the Sample Handler adds no length.
+- General bug fixes.
+
 ## 1.27.0 — 16 Nov 2026
 
 - Atellica line-up follows the Sealer and Decapper position rules.
