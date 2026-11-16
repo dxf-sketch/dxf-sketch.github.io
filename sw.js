@@ -1,5 +1,5 @@
 // DXF Sketch offline cache. VERSION must match APP_VERSION in index.html; bump both on every release.
-const VERSION = '1.26.0';
+const VERSION = '1.27.0';
 const CACHE = 'dxf-sketch-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 const EXTRA = ['./icon.svg', './icon-maskable.svg'];

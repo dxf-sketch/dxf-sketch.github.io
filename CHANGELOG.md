@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.27.0 — 16 Nov 2026
+
+- Atellica line-up follows the Sealer and Decapper position rules.
+- Line-up placed anywhere in the room, nudged to the nearest place where it fits.
+- Whole line-up selects all its pieces.
+- General bug fixes.
+
 ## 1.26.0 — 16 Nov 2026
 
 - Atellica line-up builder: Solution or CI, with left and right turns (L or U).
