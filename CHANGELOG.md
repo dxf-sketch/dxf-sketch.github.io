@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.23.0 — 16 Nov 2026
+
+- Analyzers tab by manufacturer (Siemens, Roche, Abbott, Others); equipment kept separate.
+- Atellica HEMA 530 and 520 added.
+- Recently used removed from the library.
+- General bug fixes.
+
 ## 1.22.1 — 16 Nov 2026
 
 - Siemens Healthineers models first in every group.
