@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.2 — 17 Nov 2026
+
+- Photo wizard: it no longer matters how the device is held. Upright, sideways either way or upside down, with rotation lock on or off, each group of photos is checked against the photos themselves (the texture has to move the way the device turned between them), and turned the right way round if the browser reported it wrongly.
+- Photos taken sideways with rotation lock on are shown upright on the marking screen and in the strip; taps stay exact.
+- No browser is named in the app’s messages any more.
+- General bug fixes
+
 ## 1.60.1 — 17 Nov 2026
 
 - Photo wizard: the survey in progress is saved on the device as you go (photos, taps, sizes, tie points). A reload, a crash or closing the app loses nothing: open the wizard again and it carries on where you were. The Walls step shows “Photo wizard · resume…” while one is waiting.
