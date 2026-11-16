@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.39.0 — 16 Nov 2026
+
+- Same projects on every device with the same GitHub token, synced room by room.
+- No device overwrites newer work from another.
+- General bug fixes.
+
 ## 1.38.0 — 16 Nov 2026
 
 - Earlier versions: device history and every GitHub backup, opened as copies.
