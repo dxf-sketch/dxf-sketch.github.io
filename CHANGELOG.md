@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.20.0 — 16 Nov 2026
+
+- Measure from a photo on the device (no AI): wall length, doors and windows from perspective.
+- Check with laser: wall by wall, then each opening; measured values are marked.
+- The Claude photo plan is removed.
+
 ## 1.19.0 — 16 Nov 2026
 
 - Revisions: issue a revision and see exactly what changed since, in the app and in the Site Survey.

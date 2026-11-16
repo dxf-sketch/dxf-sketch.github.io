@@ -194,21 +194,13 @@ with sync_playwright() as p:
     check('bob' in A.inner_text('#sheet') if A.query_selector('#sheet') else True, 'the owner sees who else is editing')
     check(not ea and not eb, 'no script errors while editing together %s' % (ea + eb)[:2])
     ca.close(); cb.close()
-    # experimental: a room drawn from photos (the API answer is pretended)
-    import json as _j2
-    plan = {"walls":[{"length_mm":5200,"turn_deg":90},{"length_mm":3600,"turn_deg":90},{"length_mm":5200,"turn_deg":90},{"length_mm":3600,"turn_deg":0}],"openings":[{"type":"door","wall":2,"offset_mm":800,"width_mm":900}],"height_mm":2800,"confidence":"medium","notes":""}
+    # measuring from a photo: perspective maths on the wall plane, on the device
     cx = b.new_context(viewport={'width': 1180, 'height': 820})
-    cx.route('https://api.anthropic.com/**', lambda r: r.fulfill(status=200, content_type='application/json', body=_j2.dumps({"content":[{"type":"text","text":_j2.dumps(plan)}]})))
-    cx.add_init_script("localStorage.setItem('dxf-sketch-ak','sk-ant-test');localStorage.setItem('dxf-sketch-settings',JSON.stringify({exPhoto:true}));")
     px = cx.new_page(); px.goto(url); px.wait_for_timeout(500)
-    import tempfile, struct, zlib
-    tmp = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
-    raw = b''.join(b'\x00' + b'\x80\x80\x80' * 8 for _ in range(8))
-    def chunk(t, d): return struct.pack('>I', len(d)) + t + d + struct.pack('>I', zlib.crc32(t + d) & 0xffffffff)
-    tmp.write(b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', 8, 8, 8, 2, 0, 0, 0)) + chunk(b'IDAT', zlib.compress(raw)) + chunk(b'IEND', b'')); tmp.close()
-    px.set_input_files('#phin2', [tmp.name]); px.wait_for_timeout(1500)
-    fp = px.evaluate("()=>{const r=window.__dxfTest.S.p.rooms[0];return r.walls.map(w=>w.len).join(',')+'|'+r.openings.length+'|'+r.h}")
-    check(fp == '5200,3600,5200,3600|1|2800', 'experimental: a room is drawn from photos (%s)' % fp)
+    pm = px.evaluate("""()=>{const T=window.__dxfTest,Hc=T.homog([[0,0],[6000,0],[6000,2700],[0,2700]],[[120,880],[1500,800],[1420,180],[200,90]]),P=p=>T.hApply(Hc,p);
+      const R=T.pmCompute({ref:{w:210,h:297,pts:[P([2000,1797]),P([2210,1797]),P([2210,1500]),P([2000,1500])]},wall:[P([0,0]),P([6000,0])],opens:[{type:'door',pts:[P([800,2100]),P([1800,0])]},{type:'window',pts:[P([3500,2100]),P([5000,900])]}]});
+      return [R.len,R.opens[0].off,R.opens[0].w,R.opens[0].h,R.opens[1].off,R.opens[1].w,R.opens[1].h,R.opens[1].sill].map(v=>Math.round(v)).join(',')}""")
+    check(pm == '6000,800,1000,2100,3500,1500,1200,900', 'a wall, a door and a window measured from a photo in perspective (%s)' % pm)
     cx.close()
     b.close()
 srv.shutdown()
