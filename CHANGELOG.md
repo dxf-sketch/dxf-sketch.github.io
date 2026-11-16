@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.24.0 — 16 Nov 2026
+
+- CN-3000/6000 (± SA-90), NEPH 630 and CLINITEK Novus added; CS-5100/2500 under Siemens.
+- COAG 360 removed.
+- Custom size analyzers in their own tab.
+- General bug fixes.
+
 ## 1.23.0 — 16 Nov 2026
 
 - Analyzers tab by manufacturer (Siemens, Roche, Abbott, Others); equipment kept separate.
