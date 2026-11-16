@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.26.0 — 16 Nov 2026
+
+- Atellica line-up builder: Solution or CI, with left and right turns (L or U).
+- Atellica Decapper and Sealer added, under Automation.
+- General bug fixes.
+
 ## 1.25.0 — 16 Nov 2026
 
 - Added CLINITEK Advantus, Atellica UAS 60, BN II, cobas 6000, cobas e 411, Hb NEXT and MAGLUMI X3, X6, 2000 Plus.
