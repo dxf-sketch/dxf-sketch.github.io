@@ -4,7 +4,7 @@ DXF Sketch, including its source code, the AutoCAD blocks, dimension style and D
 contains, its icons and its documentation (together, "the Software"), is proprietary.
 
 Permission is granted to use the Software as published at
-https://dtheofilopoulos.github.io/DXF-Sketch/ (including adding it to a device's Home Screen and
+https://dxf-sketch.github.io/ (including adding it to a device's Home Screen and
 running it offline) and to use, keep and share the drawings, DXF files, reports and project files
 you create with it, without restriction.
 
@@ -21,4 +21,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OF OR OTHER DEALINGS IN THE SOFTWARE. Me
 drawings made with it must be checked before they are relied on.
 
 For permission to use the Software in other ways, open an issue at
-https://github.com/dtheofilopoulos/DXF-Sketch/issues.
+https://github.com/dxf-sketch/dxf-sketch.github.io/issues.

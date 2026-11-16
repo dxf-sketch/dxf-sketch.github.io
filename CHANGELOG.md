@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.37.0 — 16 Nov 2026
+
+- New address: dxf-sketch.github.io; the old one hands everything across.
+- DXF and project file saved together on iPad and iPhone.
+- General bug fixes.
+
 ## 1.36.0 — 16 Nov 2026
 
 - Calmer, cleaner look across the app.
