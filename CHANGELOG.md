@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.48.0 — 16 Nov 2026
+
+- Flat top bar, no boxes around boxes.
+- Version and scale bar without boxes.
+- General bug fixes.
+
 ## 1.47.0 — 16 Nov 2026
 
 - cobas 6000 in all seven module combinations.
