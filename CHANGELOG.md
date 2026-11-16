@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.17.0 — 16 Nov 2026
+
+- Bill of quantities in the app (copy to Excel) and in the Site Survey.
+- General bug fixes.
+
 ## 1.16.0 — 16 Nov 2026
 
 - Photo pins on the plan and in the Site Survey.
