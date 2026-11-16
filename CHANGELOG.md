@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.36.0 — 16 Nov 2026
+
+- Calmer, cleaner look across the app.
+- Green ticks for the steps you have filled in.
+- Ready for the move to dxf-sketch.github.io.
+- General bug fixes.
+
 ## 1.35.0 — 16 Nov 2026
 
 - Blue + button on every step: a sheet of large tiles to add rooms, walls, pillars, openings, services, furniture and equipment.
