@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.1 — 17 Nov 2026
+
+- Photo wizard: the survey in progress is saved on the device as you go (photos, taps, sizes, tie points). A reload, a crash or closing the app loses nothing: open the wizard again and it carries on where you were. The Walls step shows “Photo wizard · resume…” while one is waiting.
+- The saved survey is cleared once the room is drawn, or on Start over; removing a photo removes its saved copy.
+- General bug fixes
+
 ## 1.60.0 — 17 Nov 2026
 
 - Photo wizard (Settings › Experimental) is now photogrammetry, still on the device with no AI and no internet: take photos all round from one spot and then from a second spot across the room, tap each corner of the room on the photos, and the room is worked out from where they appear. Tie points link overlapping photos automatically, and a bundle adjustment finds the camera, the lens and every point at once; scale comes from one laser length (most accurate), the room height or the camera height.
