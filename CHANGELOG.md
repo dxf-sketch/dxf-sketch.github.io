@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.19.0 — 16 Nov 2026
+
+- Revisions: issue a revision and see exactly what changed since, in the app and in the Site Survey.
+
 ## 1.18.0 — 16 Nov 2026
 
 - Select several items: same height, space evenly, butt together, move by a distance, delete.
