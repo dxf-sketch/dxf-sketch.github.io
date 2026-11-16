@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.46.1 — 16 Nov 2026
+
+- DiaSorin LIAISON XL added.
+- General bug fixes.
+
 ## 1.46.0 — 16 Nov 2026
 
 - + on every step, reaching every section.
