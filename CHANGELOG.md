@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.58.0 — 16 Nov 2026
+
+- Delete what you select with the Delete or Backspace key: doors, windows, passages, pillars, shafts, beams, services, furniture, equipment, walls, and several items selected together. Undo brings them back.
+- A selected beam gets its own bar under the plan, with Delete and Done.
+- Tap the logo or DXF Sketch to go home: everything is unselected, open panels close, and the whole plan is shown in 2D. Projects are under ⌘O and the project name.
+- General bug fixes
+
 ## 1.57.0 — 16 Nov 2026
 
 - Photos: see every photo of the project (Whole project, grouped by room), and go to the previous or next room from the Photos pane with the arrows; tap a room's name to go to it.
