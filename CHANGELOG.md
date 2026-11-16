@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.51.0 — 16 Nov 2026
+
+- The Site survey (PDF) button is in colour.
+- The site survey is short and to the point: a cover with the general plan, then one page per room with its 2D plan, a 3D view, the essentials (area, height, openings, services, equipment), its checklist and sign-off, and a last page with the checklist for every room and the signatures.
+- Signatures are drawn with a finger or pen: sign off a room from its checklist, and sign the survey as surveyor and customer in Export.
+- General bug fixes
+
 ## 1.50.0 — 16 Nov 2026
 
 - Deleting a project deletes it on all your devices: it comes out of your GitHub backup, and your other devices remove it the next time they sync (Earlier versions keeps a copy).
