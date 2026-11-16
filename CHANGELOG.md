@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.30.0 — 16 Nov 2026
+
+- Atellica Solution with Rack Handler.
+- CN and CS analyzers listed under their own names.
+- General bug fixes.
+
 ## 1.29.1 — 16 Nov 2026
 
 - IM 1300 / 1600 as one component.
