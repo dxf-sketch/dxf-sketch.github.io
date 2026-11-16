@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.35.0 — 16 Nov 2026
+
+- Blue + button on every step: a sheet of large tiles to add rooms, walls, pillars, openings, services, furniture and equipment.
+- + turns into Done while adding; pulses on empty steps.
+- General bug fixes.
+
 ## 1.34.0 — 16 Nov 2026
 
 - How-to hints as messages and ⓘ instead of always on screen.
