@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.49.0 — 16 Nov 2026
+
+- Steps at the bottom as a flat breadcrumb, like the top bar.
+- General bug fixes.
+
 ## 1.48.0 — 16 Nov 2026
 
 - Flat top bar, no boxes around boxes.
