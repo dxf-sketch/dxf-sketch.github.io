@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.34.0 — 16 Nov 2026
+
+- How-to hints as messages and ⓘ instead of always on screen.
+- Guidance moved to tooltips.
+- General bug fixes.
+
 ## 1.33.0 — 16 Nov 2026
 
 - Site workflow checked end to end in the new order.
