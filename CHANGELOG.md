@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.52.0 — 16 Nov 2026
+
+- The site survey PDF is sharper: pages are made at print quality (300 dpi), so text, plans and the 3D views stay crisp when zoomed in or printed.
+- Bill of quantities is no longer in Export.
+- General bug fixes
+
 ## 1.51.0 — 16 Nov 2026
 
 - The Site survey (PDF) button is in colour.
