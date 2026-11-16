@@ -208,12 +208,16 @@ with sync_playwright() as p:
       const B=T.pwBuild(o,{h:'',ref:'6000',walls:[[1],[1],[1],[1],[1],[1]]}),L=T.layoutRoom({walls:B.walls,t:150},[0,0],0,false),w0=B.walls[0];
       return [L.closed,B.walls.length,w0.len,B.walls.map(w=>Math.round(w.turn)).join('/'),B.openings.length,B.openings[0].wall===w0.id,B.openings[0].off,B.points.map(q=>q.along).join('/'),B.items[0].along,Math.round(L.area/1e4)].join(',')}""")
     check(pw == 'true,6,6000,0/90/90/-90/90/90,2,true,4000,2950/3050,1600,1943', 'photo wizard: a draft read from photos closes, wall 1 first, and keeps its openings and outlets in place (%s)' % pw)
-    # photo wizard, measured on the device: floor points of four walls, a door and a window aimed at from 1.5 m, become a 6 × 4 m room
-    dv = px.evaluate("""()=>{const T=window.__dxfTest,H=1.5,dir=P=>{const v=[P[0],P[1],P[2]-H],l=Math.hypot(...v);return v.map(x=>x/l);};
-      const W=[[[-1,2.5,0],[2,2.5,0],[['door',[[0,2.5,1],[1,2.5,1.2]]]]],[[4,2,0],[4,-1,0],[['window',[[4,1.5,0.9],[4,0,2.1]]]]],[[3,-1.5,0],[-1,-1.5,0],[]],[[-2,-1,0],[-2,2,0],[['ceil',[[-2,0,2.8]]]]]];
-      const P={h:'2800',ref:'',walls:W.map(()=>[]),marks:W.map(w=>[{k:'floor',pts:[dir(w[0]),dir(w[1])]}].concat(w[2].map(x=>({k:x[0],pts:x[1].map(dir)})))),inc:{}};
-      const o=T.pwGeom(P,1500),B=T.pwBuild(o,P);return [B.walls.map(w=>w.len).join('/'),B.openings.map(x=>x.type+' '+x.off+' '+x.w+' '+(x.sill||0)+' '+(x.h||0)).join('|'),B.h].join(',')}""")
-    check(dv == '6000/4000/6000/4000,door 3000 1000 0 0|window 1500 1500 900 1200,2800', 'photo wizard: a room aimed at with the motion sensors comes out to size (%s)' % dv)
+    # photo wizard, photogrammetry: a 6 x 4 m room photographed from two spots (sensors a little off), its corners and an analyzer tapped, solved to size
+    pg = px.evaluate("""()=>{const T=window.__dxfTest,PG=T.PG;let sd=11;const rnd=()=>{sd=(sd*16807)%2147483647;return sd/2147483647;},gs=()=>{const u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+      const P={c1:[0,4,0],c2:[6,4,0],c3:[6,0,0],c4:[0,0,0],aL:[4.844,1.789,0],aR:[4.844,0.3,0]},K={c1:'corner',c2:'corner',c3:'corner',c4:'corner',aL:'equip',aR:'equip'},ST=[[2,1.5,1.5],[4,2.6,1.48]],LAND=[0,-1,0,1,0,0,0,0,1],photos=[],cand={};let n=0;
+      ST.forEach((c,si)=>[0,30,60,90,120,150,180,210,240,270,300,330].forEach(h=>{const R=PG.mm(PG.rot(h,72,0),LAND),ph={id:'p'+(n++),W:1600,H:1200,ang:90,st:si};
+        Object.keys(P).forEach(k=>{const uv=PG.proj({W:1600,H:1200,R:R,ang:90},P[k],c,0.82,null);if(uv&&uv[0]>20&&uv[0]<1580&&uv[1]>20&&uv[1]<1180)(cand[k]=cand[k]||[]).push([Math.hypot(uv[0]-800,uv[1]-600),ph.id,[uv[0]+gs()*1.5,uv[1]+gs()*1.5],si]);});
+        ph.R=PG.mm(PG.exp([gs()*0.7,gs()*0.7,gs()*1.5+4*si].map(v=>v*Math.PI/180)),R);photos.push(ph);}));
+      const pts=Object.keys(P).map(k=>{const o={};[0,1].forEach(si=>(cand[k]||[]).filter(c=>c[3]===si).sort((a,b)=>a[0]-b[0]).slice(0,2).forEach(c=>o[c[1]]=c[2]));return{id:k,k:K[k],obs:o};});
+      const s=PG.solve({photos:photos,pts:pts,camH:1.5,laser:{a:'c1',b:'c2',d:6}}),d=(a,b)=>Math.hypot(s.X[a][0]-s.X[b][0],s.X[a][1]-s.X[b][1]);
+      return [d('c2','c3'),d('c3','c4'),d('c4','c1'),d('aL','aR')].map((v,i)=>Math.abs(v-[4,6,4,1.489][i])<0.15?'ok':Math.round(v*1000)).join(',')+','+(s.rms<3?'fit':'misfit')+','+s.spots}""")
+    check(pg == 'ok,ok,ok,ok,fit,2', 'photo wizard: photogrammetry from two spots puts the walls and an analyzer to size (%s)' % pg)
     cx.close()
     b.close()
 srv.shutdown()

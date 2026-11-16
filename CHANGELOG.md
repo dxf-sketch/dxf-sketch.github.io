@@ -2,6 +2,14 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.0 — 17 Nov 2026
+
+- Photo wizard (Settings › Experimental) is now photogrammetry, still on the device with no AI and no internet: take photos all round from one spot and then from a second spot across the room, tap each corner of the room on the photos, and the room is worked out from where they appear. Tie points link overlapping photos automatically, and a bundle adjustment finds the camera, the lens and every point at once; scale comes from one laser length (most accurate), the room height or the camera height.
+- Analyzers: tap an analyzer’s two front corners on the photos and the app measures it, tells which way it faces, and suggests the models on file that fit its width; pick one and it is placed against its wall in the plan.
+- A clear path through it all: numbered steps for the photos (a ring shows how far round you have gone at each spot) and for the marking, a drawing of where to tap, where each point should be on the next photo, a loupe for precise taps, and a red line wherever a tap disagrees with the rest.
+- Doors, windows, passages, outlets, network, water, drains and a ceiling corner can be tapped too; every point shows how well it is pinned down.
+- General bug fixes
+
 ## 1.59.0 — 16 Nov 2026
 
 - Photo wizard (Settings › Experimental) now measures on the device, with no AI, no API key and no internet: stand in the room, aim the camera’s cross at each wall’s floor line (left part, then right part), turning right from wall to wall, then at doors, windows, passages, outlets, network outlets, water and drains. The motion sensors work out the walls, corners and positions; each wall gets a photo. Scale comes from your camera height, or better from the room height with a Ceiling line marked, or from one laser length of wall 1.
