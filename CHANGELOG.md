@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.21.0 — 16 Nov 2026
+
+- New look on iPad and computers: full-screen plan with floating bars, a step dock at the bottom and a floating side card.
+- Messages no longer catch taps meant for the plan.
+- General bug fixes.
+
 ## 1.20.0 — 16 Nov 2026
 
 - Measure from a photo on the device (no AI): wall length, doors and windows from perspective.
