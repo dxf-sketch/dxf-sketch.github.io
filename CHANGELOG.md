@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.42.0 — 16 Nov 2026
+
+- + sized like the step buttons; compact Add tiles.
+- Cat 6 label.
+- General bug fixes.
+
 ## 1.41.0 — 16 Nov 2026
 
 - + at the bottom left, in line with the step bar.
