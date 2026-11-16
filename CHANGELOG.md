@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.29.1 — 16 Nov 2026
+
+- IM 1300 / 1600 as one component.
+- General bug fixes.
+
 ## 1.29.0 — 16 Nov 2026
 
 - One Decapper, position 1, 2 or 3.
