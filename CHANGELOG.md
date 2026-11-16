@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.40.0 — 16 Nov 2026
+
+- Devices now meet in one shared backup and read all earlier ones.
+- Sync now, with last-synced time and project count.
+- General bug fixes.
+
 ## 1.39.0 — 16 Nov 2026
 
 - Same projects on every device with the same GitHub token, synced room by room.
