@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.46.0 — 16 Nov 2026
+
+- + on every step, reaching every section.
+- Walls: add a corner, split a wall, room next door.
+- General bug fixes.
+
 ## 1.45.0 — 16 Nov 2026
 
 - + menu with categories, then sizes or types.
