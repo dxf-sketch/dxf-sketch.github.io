@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.54.0 — 16 Nov 2026
+
+- Photos: tap one to open it full screen, then swipe or use the arrows to go through every photo of the project. Each shows its room and wall.
+- Move a photo to another room from the viewer (Undo puts it back), or remove it there.
+- The Photos panel scrolls when a room has many photos.
+- General bug fixes
+
 ## 1.53.0 — 16 Nov 2026
 
 - Photos sync across your devices: each photo goes once into a private "DXF Sketch photos" gist on your GitHub, and your other devices download the ones they are missing. Removing a photo or deleting a project removes its photos everywhere. In Settings you can keep photo downloads to Wi-Fi only (where the device says it is on mobile data) or allow mobile data too.
