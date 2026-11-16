@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.44.0 — 16 Nov 2026
+
+- Compact selection bar: Edit, Select more, ⋯, Delete, ✕.
+- General bug fixes.
+
 ## 1.43.0 — 16 Nov 2026
 
 - Drag a selection: everything moves together.
