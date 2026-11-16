@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.50.0 — 16 Nov 2026
+
+- Deleting a project deletes it on all your devices: it comes out of your GitHub backup, and your other devices remove it the next time they sync (Earlier versions keeps a copy).
+- Delete buttons have red letters and a red border.
+- General bug fixes
+
 ## 1.49.0 — 16 Nov 2026
 
 - Steps at the bottom as a flat breadcrumb, like the top bar.
