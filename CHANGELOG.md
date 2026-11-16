@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.53.0 — 16 Nov 2026
+
+- Photos sync across your devices: each photo goes once into a private "DXF Sketch photos" gist on your GitHub, and your other devices download the ones they are missing. Removing a photo or deleting a project removes its photos everywhere. In Settings you can keep photo downloads to Wi-Fi only (where the device says it is on mobile data) or allow mobile data too.
+- Clearer headings and descriptions: section headings are larger, and the descriptions under them are a size smaller.
+- General bug fixes
+
 ## 1.52.0 — 16 Nov 2026
 
 - The site survey PDF is sharper: pages are made at print quality (300 dpi), so text, plans and the 3D views stay crisp when zoomed in or printed.
