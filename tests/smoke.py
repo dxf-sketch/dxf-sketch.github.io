@@ -201,6 +201,13 @@ with sync_playwright() as p:
       const R=T.pmCompute({ref:{w:210,h:297,pts:[P([2000,1797]),P([2210,1797]),P([2210,1500]),P([2000,1500])]},wall:[P([0,0]),P([6000,0])],opens:[{type:'door',pts:[P([800,2100]),P([1800,0])]},{type:'window',pts:[P([3500,2100]),P([5000,900])]}]});
       return [R.len,R.opens[0].off,R.opens[0].w,R.opens[0].h,R.opens[1].off,R.opens[1].w,R.opens[1].h,R.opens[1].sill].map(v=>Math.round(v)).join(',')}""")
     check(pm == '6000,800,1000,2100,3500,1500,1200,900', 'a wall, a door and a window measured from a photo in perspective (%s)' % pm)
+    # photo wizard (experimental): a plan read from photos becomes a closed room, its openings and services on the right walls
+    pw = px.evaluate("""()=>{const T=window.__dxfTest,o={walls:[{length_mm:6000,turn_deg:-90},{length_mm:4000,turn_deg:-90},{length_mm:3000,turn_deg:-91},{length_mm:1500,turn_deg:88},{length_mm:3100,turn_deg:-90},{length_mm:2500,turn_deg:-90}],
+        openings:[{type:'door',wall:1,offset_mm:1000,width_mm:1000},{type:'door',wall:1,offset_mm:1040,width_mm:1000},{type:'window',wall:2,offset_mm:500,width_mm:1500,sill_mm:900,height_mm:1200}],
+        services:[{kind:'s1p',wall:1,offset_mm:3000,height_mm:300,count:2}],pillars:[{kind:'pillar',wall:1,offset_mm:4000,width_mm:400,depth_mm:400}],confidence:'medium'};
+      const B=T.pwBuild(o,{h:'',ref:'6000',walls:[[1],[1],[1],[1],[1],[1]]}),L=T.layoutRoom({walls:B.walls,t:150},[0,0],0,false),w0=B.walls[0];
+      return [L.closed,B.walls.length,w0.len,B.walls.map(w=>Math.round(w.turn)).join('/'),B.openings.length,B.openings[0].wall===w0.id,B.openings[0].off,B.points.map(q=>q.along).join('/'),B.items[0].along,Math.round(L.area/1e4)].join(',')}""")
+    check(pw == 'true,6,6000,0/90/90/-90/90/90,2,true,4000,2950/3050,1600,1943', 'photo wizard: a draft read from photos closes, wall 1 first, and keeps its openings and outlets in place (%s)' % pw)
     cx.close()
     b.close()
 srv.shutdown()

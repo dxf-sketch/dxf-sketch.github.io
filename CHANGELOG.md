@@ -2,6 +2,14 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.56.0 — 16 Nov 2026
+
+- Experimental, in Settings: Photo wizard. Photograph each wall in turn (Walls › Photo wizard) and Claude draws a first draft of the room: walls, doors, windows, passages, pillars, shafts, beams, services and benches. Check it on a preview, pick what to draw, then measure over it: every length shows ≈ until you measure it or Check with laser. Optional room height and one laser length make it much more accurate. Needs your Anthropic API key, which stays on the device; pick Opus, Sonnet or Haiku in Settings.
+- The photos from the wizard are kept with the room, tagged to their walls, for the site survey.
+- Photo angles are hidden on the sketch until you turn them on.
+- The Photos button in the top bar uses the photos icon.
+- General bug fixes
+
 ## 1.55.1 — 16 Nov 2026
 
 - The photo angles button uses a photo icon instead of a camera.
