@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.3 — 17 Nov 2026
+
+- Photo angles: when turned on, they show for every room on the floor, not only the selected one (the other rooms’ a little lighter).
+- Tap a photo angle on the plan for a small preview: the photo, its number, room and wall, with Open (the full photo viewer) and Go to the room when it belongs to another one.
+- General bug fixes
+
 ## 1.60.2 — 17 Nov 2026
 
 - Photo wizard: it no longer matters how the device is held. Upright, sideways either way or upside down, with rotation lock on or off, each group of photos is checked against the photos themselves (the texture has to move the way the device turned between them), and turned the right way round if the browser reported it wrongly.
