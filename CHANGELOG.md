@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.33.0 — 16 Nov 2026
+
+- Site workflow checked end to end in the new order.
+- Atellica configurations read left to right from the front.
+- Tidier panels and step bar.
+- General bug fixes.
+
 ## 1.32.0 — 16 Nov 2026
 
 - Pillars before Openings.
