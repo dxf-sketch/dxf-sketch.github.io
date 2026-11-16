@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.47.0 — 16 Nov 2026
+
+- cobas 6000 in all seven module combinations.
+- General bug fixes.
+
 ## 1.46.1 — 16 Nov 2026
 
 - DiaSorin LIAISON XL added.
