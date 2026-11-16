@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.18.0 — 16 Nov 2026
+
+- Select several items: same height, space evenly, butt together, move by a distance, delete.
+- General bug fixes.
+
 ## 1.17.0 — 16 Nov 2026
 
 - Bill of quantities in the app (copy to Excel) and in the Site Survey.
