@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.15.0 — 16 Nov 2026
+
+- Analyzer models library (biochemistry, immunology, hematology, coagulation, urinalysis) at published sizes, with typical services.
+- General bug fixes.
+
 ## 1.14.0 — 16 Nov 2026
 
 - Tap selects, double tap (or Edit) opens the details.
