@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.45.0 — 16 Nov 2026
+
+- + menu with categories, then sizes or types.
+- No bar above the plan; a small label says what you are placing.
+- Less padding on buttons.
+- General bug fixes.
+
 ## 1.44.0 — 16 Nov 2026
 
 - Compact selection bar: Edit, Select more, ⋯, Delete, ✕.
