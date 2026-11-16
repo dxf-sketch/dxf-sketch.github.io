@@ -208,6 +208,12 @@ with sync_playwright() as p:
       const B=T.pwBuild(o,{h:'',ref:'6000',walls:[[1],[1],[1],[1],[1],[1]]}),L=T.layoutRoom({walls:B.walls,t:150},[0,0],0,false),w0=B.walls[0];
       return [L.closed,B.walls.length,w0.len,B.walls.map(w=>Math.round(w.turn)).join('/'),B.openings.length,B.openings[0].wall===w0.id,B.openings[0].off,B.points.map(q=>q.along).join('/'),B.items[0].along,Math.round(L.area/1e4)].join(',')}""")
     check(pw == 'true,6,6000,0/90/90/-90/90/90,2,true,4000,2950/3050,1600,1943', 'photo wizard: a draft read from photos closes, wall 1 first, and keeps its openings and outlets in place (%s)' % pw)
+    # photo wizard, measured on the device: floor points of four walls, a door and a window aimed at from 1.5 m, become a 6 × 4 m room
+    dv = px.evaluate("""()=>{const T=window.__dxfTest,H=1.5,dir=P=>{const v=[P[0],P[1],P[2]-H],l=Math.hypot(...v);return v.map(x=>x/l);};
+      const W=[[[-1,2.5,0],[2,2.5,0],[['door',[[0,2.5,1],[1,2.5,1.2]]]]],[[4,2,0],[4,-1,0],[['window',[[4,1.5,0.9],[4,0,2.1]]]]],[[3,-1.5,0],[-1,-1.5,0],[]],[[-2,-1,0],[-2,2,0],[['ceil',[[-2,0,2.8]]]]]];
+      const P={h:'2800',ref:'',walls:W.map(()=>[]),marks:W.map(w=>[{k:'floor',pts:[dir(w[0]),dir(w[1])]}].concat(w[2].map(x=>({k:x[0],pts:x[1].map(dir)})))),inc:{}};
+      const o=T.pwGeom(P,1500),B=T.pwBuild(o,P);return [B.walls.map(w=>w.len).join('/'),B.openings.map(x=>x.type+' '+x.off+' '+x.w+' '+(x.sill||0)+' '+(x.h||0)).join('|'),B.h].join(',')}""")
+    check(dv == '6000/4000/6000/4000,door 3000 1000 0 0|window 1500 1500 900 1200,2800', 'photo wizard: a room aimed at with the motion sensors comes out to size (%s)' % dv)
     cx.close()
     b.close()
 srv.shutdown()

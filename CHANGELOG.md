@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.59.0 — 16 Nov 2026
+
+- Photo wizard (Settings › Experimental) now measures on the device, with no AI, no API key and no internet: stand in the room, aim the camera’s cross at each wall’s floor line (left part, then right part), turning right from wall to wall, then at doors, windows, passages, outlets, network outlets, water and drains. The motion sensors work out the walls, corners and positions; each wall gets a photo. Scale comes from your camera height, or better from the room height with a Ceiling line marked, or from one laser length of wall 1.
+- A live sketch of the room appears as soon as three walls are marked; Undo steps back one mark at a time.
+- The Anthropic API key and the photo reading by Claude are gone; a key saved earlier is removed from the device.
+- General bug fixes
+
 ## 1.58.0 — 16 Nov 2026
 
 - Delete what you select with the Delete or Backspace key: doors, windows, passages, pillars, shafts, beams, services, furniture, equipment, walls, and several items selected together. Undo brings them back.
