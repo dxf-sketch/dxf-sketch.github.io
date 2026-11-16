@@ -2,6 +2,14 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.43.0 — 16 Nov 2026
+
+- Drag a selection: everything moves together.
+- Move furniture and equipment between rooms by dragging or Move to room…
+- Bench cabinets and drawers flush with the bench front.
+- Room dimensions one size, smaller, regular type, scaling with zoom.
+- General bug fixes.
+
 ## 1.42.0 — 16 Nov 2026
 
 - + sized like the step buttons; compact Add tiles.

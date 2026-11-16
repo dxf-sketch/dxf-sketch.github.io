@@ -102,7 +102,7 @@ with sync_playwright() as p:
                 const o={bubbles:true,clientX:q[0],clientY:q[1],pointerId:1,isPrimary:true,pointerType:'touch'};el.dispatchEvent(new PointerEvent('pointerdown',o));el.dispatchEvent(new PointerEvent('pointerup',o));el.dispatchEvent(new MouseEvent('click',o));
                 const f=r.furn[r.furn.length-1];out.push(f.kind+':'+Math.round(f.off));}
               S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;S.editFurn=null;T.render();return out.join(',');}""")
-            check(pl == 'wcab:0,bcab:0', 'a wall cabinet and a bench cabinet can be placed by tapping over a bench and its outlets, and stay against the wall (%s)' % pl)
+            check(pl == 'wcab:0,bcab:300', 'a wall cabinet goes against the wall and a bench cabinet under the bench, its front flush with the bench front (%s)' % pl)
             two = pg.evaluate("""()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],keep=JSON.stringify(S.p);T.A.step(5);T.A.ptkind('rj');T.render();
               const svg=document.getElementById('svg'),sp=(x,y)=>{const m=svg.getScreenCTM(),p=svg.createSVGPoint();p.x=x;p.y=-y;const q=p.matrixTransform(m);return [q.x,q.y];};
               const w=S.G.layouts[r.id].walls[2],n0=r.points.length,tapAt=u=>{const P=[w.A[0]+w.d[0]*u+w.n[0]*75,w.A[1]+w.d[1]*u+w.n[1]*75],q=sp(...P),el=document.elementFromPoint(q[0],q[1]),o={bubbles:true,clientX:q[0],clientY:q[1],pointerId:2,isPrimary:true,pointerType:'touch'};
