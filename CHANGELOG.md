@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.25.0 — 16 Nov 2026
+
+- Added CLINITEK Advantus, Atellica UAS 60, BN II, cobas 6000, cobas e 411, Hb NEXT and MAGLUMI X3, X6, 2000 Plus.
+- General bug fixes.
+
 ## 1.24.0 — 16 Nov 2026
 
 - CN-3000/6000 (± SA-90), NEPH 630 and CLINITEK Novus added; CS-5100/2500 under Siemens.
