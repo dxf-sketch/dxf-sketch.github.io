@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.31.0 — 16 Nov 2026
+
+- New line icons for every piece of equipment and analyzer discipline.
+- General bug fixes.
+
 ## 1.30.0 — 16 Nov 2026
 
 - Atellica Solution with Rack Handler.
