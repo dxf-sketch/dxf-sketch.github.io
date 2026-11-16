@@ -2,6 +2,15 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.14.0 — 16 Nov 2026
+
+- Tap selects, double tap (or Edit) opens the details.
+- Undo and redo on the toolbar beside the plan.
+- Photos and Notes are separate.
+- What's new shows the last five versions.
+- Quick taps along a wall keep adding.
+- General bug fixes.
+
 ## 1.13.1 — 16 Nov 2026
 
 - Selecting fixed: symbols and wall strips no longer take taps meant for furniture.
