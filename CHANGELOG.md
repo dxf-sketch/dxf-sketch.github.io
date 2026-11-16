@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.29.0 — 16 Nov 2026
+
+- One Decapper, position 1, 2 or 3.
+- Sample Handler or Rack Handler always before the analyzers.
+- Room dimensions grow when zooming in; pillar and shaft measurements match them.
+- General bug fixes.
+
 ## 1.28.0 — 16 Nov 2026
 
 - Atellica configuration: Solution (CH and IM analyzers) or CI, one per configuration.
