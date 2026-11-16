@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.32.0 — 16 Nov 2026
+
+- Pillars before Openings.
+- Steps numbered 1 to 8 in circles.
+- General bug fixes.
+
 ## 1.31.0 — 16 Nov 2026
 
 - New line icons for every piece of equipment and analyzer discipline.
