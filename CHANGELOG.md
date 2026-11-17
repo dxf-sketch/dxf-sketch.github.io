@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.9 — 17 Nov 2026
+
+- Faster when the plan changes on big projects: each room’s dimensions are drawn together rather than one by one, so a floor of 40 rooms has less than half the elements to lay out and a change shows in about two thirds of the time.
+- Wording: the survey is signed by the surveyor and the stakeholder, and notes ask what the stakeholders said, instead of the customer.
+- General bug fixes
+
 ## 1.60.8 — 17 Nov 2026
 
 - Faster on big projects: a tap that leaves the plan as it is (a choice in the panel, say) no longer redraws the plan, and the plan is no longer measured again after each redraw. On a 40-room floor a tap takes about a third of the time it did.
@@ -118,7 +124,7 @@ Important changes only; smaller ones are listed as general bug fixes.
 
 - The Site survey (PDF) button is in colour.
 - The site survey is short and to the point: a cover with the general plan, then one page per room with its 2D plan, a 3D view, the essentials (area, height, openings, services, equipment), its checklist and sign-off, and a last page with the checklist for every room and the signatures.
-- Signatures are drawn with a finger or pen: sign off a room from its checklist, and sign the survey as surveyor and customer in Export.
+- Signatures are drawn with a finger or pen: sign off a room from its checklist, and sign the survey as surveyor and stakeholder in Export.
 - General bug fixes
 
 ## 1.50.0 — 16 Nov 2026
