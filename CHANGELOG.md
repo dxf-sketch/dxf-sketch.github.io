@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.8 — 17 Nov 2026
+
+- Faster on big projects: a tap that leaves the plan as it is (a choice in the panel, say) no longer redraws the plan, and the plan is no longer measured again after each redraw. On a 40-room floor a tap takes about a third of the time it did.
+- Faster DXF export and redraw on floors with many rooms: walls next door are matched up only with the walls near them.
+- General bug fixes
+
 ## 1.60.7 — 17 Nov 2026
 
 - Quit: the button that saves, stops the program on the laptop and closes the page is now simply Quit, with an exit icon, in the top bar, the menu and Home.
