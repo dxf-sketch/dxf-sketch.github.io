@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.7 — 17 Nov 2026
+
+- Quit: the button that saves, stops the program on the laptop and closes the page is now simply Quit, with an exit icon, in the top bar, the menu and Home.
+
 ## 1.60.6 — 17 Nov 2026
 
 - Messages show at full width instead of in a narrow column, and on phones over the top of the plan rather than over the panel.

@@ -12,7 +12,7 @@ writes drawings straight into the Sketches folder. No extra packages needed.
     python DXF-Sketch.py --console          # keep the terminal window open (troubleshooting)
 
 On Windows the terminal window closes straight away and the program carries on
-without one: everything is in the web UI, and Projects › Close DXF Sketch stops it.
+without one: everything is in the web UI, and Projects › Quit stops it.
 What the window would have shown goes to DXF-Sketch.log next to the script.
 """
 import argparse
@@ -36,7 +36,7 @@ OUT_DIR = HERE / "Sketches"
 LOG_FILE = HERE / "DXF-Sketch.log"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
-VERSION = "1.60.6"
+VERSION = "1.60.7"
 AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────
@@ -166,7 +166,7 @@ def banner(port: int, ips: list) -> None:
     print(row(f"{GREY}•{OFF} A VPN can hide the laptop: disconnect it while you work."))
     print(row())
     print(row("No laptop needed: the github.io version runs on the iPad by itself.", DIM))
-    print(row("Projects › Close DXF Sketch stops it" + ("." if HIDDEN else ", or Ctrl+C in this window."), DIM))
+    print(row("Projects › Quit stops it" + ("." if HIDDEN else ", or Ctrl+C in this window."), DIM))
     print(bottom())
     print()
     print(f"  {BOLD}Activity{OFF}")
