@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.64.0 — 17 Nov 2026
+
+- Wall wizard: each corner is now a vertical edge, tapped at the floor and at the ceiling. With the room height measured once by laser, the angles down and up to the two ends place every corner from a single spot, whatever height the iPad is held at. In tests a 6 × 4 m room came out within about 10–40 mm from one spot.
+- Wall wizard: photos are taken in two rounds from the middle of the room, tilted down then up; the ring shows both rounds. A second spot and a wall 1 laser length are optional extras for more accuracy, or for rooms where the ceiling is not one height.
+- Wall wizard: Floor end / Ceiling end pills for each corner, both ends drawn on the photo and joined by a dashed line; after a tap it moves to the other end. Going back to the floor end before any ceiling tap skips ceiling ends from then on.
+- General bug fixes
+
 ## 1.63.0 — 17 Nov 2026
 
 - Wall wizard: Start over… at every stage, for just the part that went wrong. Redo the marks (keep the photos), retake the last spot (the first spot and its marks stay), or start over completely. The laser length and heights are kept.

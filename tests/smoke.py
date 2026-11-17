@@ -232,6 +232,27 @@ with sync_playwright() as p:
       const w2=S.G.warn.filter(x=>/needs a Sample Handler/.test(x)).length;r.furn=JSON.parse(keep);r.walls=JSON.parse(kw);T.render();T.ST.lu=null;
       return [seq,sh,ty,seq2,seq3,w1,w2].join(',');}""")
     check(at == 'atsh+ch930,lineup,sol,atsh+ch930+im1600,ci:atsh+atcis,1,0', 'Atellica CH, IM and CI for the Sample Handler go in behind a Sample Handler; a lone one is flagged (%s)' % at)
+    # wall wizard: each corner tapped at the floor and the ceiling from ONE spot, the room height by laser: the room to size, whatever height the camera is held at
+    fcj = """(cfg)=>{const T=window.__dxfTest,PG=T.PG;let sd=cfg.seed;const rnd=()=>{sd=(sd*16807)%2147483647;return sd/2147483647;},gs=()=>{const u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+  const H=2.8,C={c1:[0,4],c2:[6,4],c3:[6,0],c4:[0,0]},ST=cfg.spots===1?[[2.6,1.8,1.45]]:[[2,1.5,1.5],[4,2.6,1.48]],LAND=[0,-1,0,1,0,0,0,0,1],photos=[],cand={},candT={};let n=0;
+  ST.forEach((c,si)=>[0,30,60,90,120,150,180,210,240,270,300,330].forEach(h=>cfg.tilts.forEach(tl=>{const R=PG.mm(PG.rot(h,tl,0),LAND),ph={id:'p'+(n++),W:1600,H:1200,ang:90,st:si};
+    Object.keys(C).forEach(k=>{[[0,cand],[H,candT]].forEach(([z,bag])=>{const uv=PG.proj({W:1600,H:1200,R:R,ang:90},[C[k][0],C[k][1],z],c,0.82,null);
+      if(uv&&uv[0]>20&&uv[0]<1580&&uv[1]>20&&uv[1]<1180)(bag[k]=bag[k]||[]).push([Math.hypot(uv[0]-800,uv[1]-600),ph.id,[uv[0]+gs()*1.5,uv[1]+gs()*1.5],si]);});});
+    ph.R=PG.mm(PG.exp([gs()*0.7,gs()*0.7,gs()*1.5+4*si].map(v=>v*Math.PI/180)),R);photos.push(ph);})));
+  const ties=[];if(cfg.ties){const Rt={};photos.forEach(p=>Rt[p.id]=p);   // specks of wall seen in two overlapping photos from one spot
+    const truth={};let m=0;ST.forEach((c,si)=>[0,30,60,90,120,150,180,210,240,270,300,330].forEach(h=>cfg.tilts.forEach(tl=>{truth['p'+(m++)]={R:PG.mm(PG.rot(h,tl,0),LAND),c:c};})));
+    const wallPt=()=>{const w=Math.floor(rnd()*4),t=rnd(),z=0.2+rnd()*2.4;return w===0?[t*6,4,z]:w===1?[6,4-t*4,z]:w===2?[6-t*6,0,z]:[0,t*4,z];};
+    for(let i=0;i<photos.length;i++)for(let j=i+1;j<photos.length;j++){const A=photos[i],B=photos[j];if(A.st!==B.st)continue;let got=0;
+      for(let k=0;k<400&&got<12;k++){const X=wallPt(),ta=truth[A.id],tb=truth[B.id],ua=PG.proj({W:1600,H:1200,R:ta.R,ang:90},X,ta.c,0.82,null),ub=PG.proj({W:1600,H:1200,R:tb.R,ang:90},X,tb.c,0.82,null);
+        if(ua&&ub&&ua[0]>0&&ua[0]<1600&&ua[1]>0&&ua[1]<1200&&ub[0]>0&&ub[0]<1600&&ub[1]>0&&ub[1]<1200){ties.push({a:A.id,b:B.id,ua:[ua[0]+gs(),ua[1]+gs()],ub:[ub[0]+gs(),ub[1]+gs()]});got++;}}}}
+  const pick=(bag,k)=>{const o={};ST.forEach((_,si)=>(bag[k]||[]).filter(c=>c[3]===si).sort((a,b)=>a[0]-b[0]).slice(0,2).forEach(c=>o[c[1]]=c[2]));return o;};
+  const pts=Object.keys(C).map(k=>{const q={id:k,k:'corner',obs:pick(cand,k)};if(cfg.top)q.top=pick(candT,k);return q;});
+  const M={photos:photos,pts:pts,camH:cfg.camH||0,ties:ties};if(cfg.roomH)M.roomH=H+gs()*0.003;if(cfg.laser)M.laser={a:'c1',b:'c2',d:6};
+  const s=PG.solve(M);if(!s)return null;const d=(a,b)=>Math.hypot(s.X[a][0]-s.X[b][0],s.X[a][1]-s.X[b][1]);
+  const e=[d('c1','c2')-6,d('c2','c3')-4,d('c3','c4')-6,d('c4','c1')-4].map(v=>Math.round(v*1000));return {e:e,rms:+s.rms.toFixed(2),H:s.H&&+s.H.toFixed(3),ang:Math.round(Math.min(...pts.map(q=>s['a'+q.id])))};}"""
+    fr = [px.evaluate(fcj, dict(spots=1, tilts=[70, 110], top=1, roomH=1, ties=1, seed=sd)) for sd in (7919, 15838)]
+    fw = [max(abs(x) for x in r['e']) if r else None for r in fr]
+    check(all(w is not None and w <= 40 for w in fw) and all(abs(r['H'] - 2.8) < 0.01 for r in fr), 'wall wizard: floor and ceiling corners from one spot put a 6 × 4 m room to within 40 mm (%s)' % fw)
     # Wall wizard: start over in parts (marks, last spot, everything), and take a drawn draft out again
     rd = px.evaluate("""async()=>{const T=window.__dxfTest,A=T.A,S=T.S,out=[];A.pwopen();await new Promise(r=>setTimeout(r,800));let P=T.getPW();
       const blob=new Blob([new Uint8Array([255,216,255,217])],{type:'image/jpeg'});

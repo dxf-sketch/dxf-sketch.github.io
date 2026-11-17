@@ -37,7 +37,7 @@ LOG_FILE = HERE / "DXF-Sketch.log"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
 MAX_ZIP = 300 * 1024 * 1024                  # a .zip with the photos
-VERSION = "1.63.0"
+VERSION = "1.64.0"
 AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────
