@@ -2,6 +2,13 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.6 — 17 Nov 2026
+
+- Messages show at full width instead of in a narrow column, and on phones over the top of the plan rather than over the panel.
+- Photos: the app asks the browser to keep this device’s photos when space runs low, the first time you add one.
+- Touch: Saved, Source and the version in the status bar are easier to hit; the closed notes pane no longer catches the keyboard.
+- General bug fixes
+
 ## 1.60.5 — 17 Nov 2026
 
 - Export: the DXF, the project file and the photos now go out as one .zip, so the project file can’t get left behind or end up in another folder. Open a project file reads the .zip back, photos included. Settings › Where exports go › Project file: In a .zip, Separate or Leave out.
