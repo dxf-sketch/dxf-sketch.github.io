@@ -232,6 +232,18 @@ with sync_playwright() as p:
       const w2=S.G.warn.filter(x=>/needs a Sample Handler/.test(x)).length;r.furn=JSON.parse(keep);r.walls=JSON.parse(kw);T.render();T.ST.lu=null;
       return [seq,sh,ty,seq2,seq3,w1,w2].join(',');}""")
     check(at == 'atsh+ch930,lineup,sol,atsh+ch930+im1600,ci:atsh+atcis,1,0', 'Atellica CH, IM and CI for the Sample Handler go in behind a Sample Handler; a lone one is flagged (%s)' % at)
+    # Wall wizard: start over in parts (marks, last spot, everything), and take a drawn draft out again
+    rd = px.evaluate("""async()=>{const T=window.__dxfTest,A=T.A,S=T.S,out=[];A.pwopen();await new Promise(r=>setTimeout(r,800));let P=T.getPW();
+      const blob=new Blob([new Uint8Array([255,216,255,217])],{type:'image/jpeg'});
+      P.ref='5400';P.photos=['a','b','c','d','e'].map((id,i)=>({id:id,st:i<3?0:1,url:URL.createObjectURL(blob),w:640,h:480,R:T.PG.rot(i*60,80,0),ang:0,f:500,work:{}}));P.pts=[{id:'q1',k:'corner',obs:{a:[1,1],d:[2,2]}},{id:'q2',k:'corner',obs:{e:[1,1]}}];P.stage='mark';
+      A.pwredo();out.push(document.querySelectorAll('.pw-redobox [data-act=pwredo1]').length);
+      A.pwredo1('spot');await new Promise(r=>setTimeout(r,300));P=T.getPW();out.push(P.photos.map(p=>p.id).join('')+'/'+P.pts.length);
+      A.pwredo();A.pwredo1('marks');P=T.getPW();out.push(P.photos.length+'/'+P.pts.length);
+      A.pwredo();A.pwredo1('all');P=T.getPW();out.push(P.photos.length+'/'+P.ref);A.pwclose();
+      const r=S.p.rooms[0],kw=JSON.stringify([r.walls,r.openings,r.items]);r.walls=[6000,4000,6000,4000].map((l,i)=>({id:'zw'+i,len:l,turn:i?90:0,t:null,m:null,src:'ai'}));r.openings=[{id:'zo',type:'door',wall:'zw2',off:1000,w:900,src:'ai'}];A.step(2);T.render();
+      const c=!!document.querySelector('[data-act=pwdraftdel]'),cf=window.confirm;window.confirm=()=>true;A.pwdraftdel();window.confirm=cf;out.push(c+'/'+r.walls.length+'/'+r.openings.length+'/'+S.sheet);
+      A.pwclose();const k=JSON.parse(kw);r.walls=k[0];r.openings=k[1];r.items=k[2];T.render();return out.join(',');}""")
+    check(rd == '3,abc/1,3/0,0/5400,true/0/0/pw', 'wall wizard: redo the marks, retake the last spot or start over, and take a drawn draft out again (%s)' % rd)
     # export bundle: the DXF, the project file and the photos in one .zip, and it opens again
     zp = px.evaluate("""async()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],id='ph_zt';r.photos=(r.photos||[]).concat([{id:id}]);
       const jpg=new Uint8Array([255,216,255,224,1,2,3,4,255,217]);try{await T.pPut(id,new Blob([jpg],{type:'image/jpeg'}));}catch(e){return 'E put '+e;}

@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.63.0 — 17 Nov 2026
+
+- Wall wizard: Start over… at every stage, for just the part that went wrong. Redo the marks (keep the photos), retake the last spot (the first spot and its marks stay), or start over completely. The laser length and heights are kept.
+- Wall wizard: the survey is no longer deleted once drawn. If the draft in the room is wrong, ↺ Take it out and redo… removes it and goes back to the photos and marks, ready to fix and draw again.
+- General bug fixes
+
 ## 1.62.1 — 17 Nov 2026
 
 - Laptop: Save to laptop writes the same .zip as every other export, photos included, into Sketches, with the DXF and the project file unpacked next to it so AutoCAD and Open from the laptop work as before.
