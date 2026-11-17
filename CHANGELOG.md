@@ -2,6 +2,14 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.62.0 — 17 Nov 2026
+
+- Walls: a new room starts with three clear ways in. Wall wizard (photos all round from two spots and one laser length), Draw by hand (on the grid with your finger or Apple Pencil, then type what the laser reads) or Wall by wall (each length and angle in turn), with Rectangle and L-shape as shortcuts. Once you pick one, the choices step aside to a row of pills.
+- Wall wizard: out of Experimental and on for everyone (it was the Photo wizard). It is also in the + menu under Walls, next to Draw by hand.
+- Number pad: no longer hidden behind the Wall wizard when typing the wall 1 laser length, the room height or the camera height; the field scrolls above the pad, and opening or closing a sheet closes the pad.
+- Walls: the Next wall chip sits below the top bar instead of over the room name.
+- General bug fixes
+
 ## 1.61.0 — 17 Nov 2026
 
 - Analyzers: the Atellica configuration is under Siemens, next to all the Siemens analyzers.
