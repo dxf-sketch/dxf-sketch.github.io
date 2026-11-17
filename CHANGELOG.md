@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.61.0 — 17 Nov 2026
+
+- Analyzers: the Atellica configuration is under Siemens, next to all the Siemens analyzers.
+- Atellica: a CH 930, an IM 1300 / 1600 or a CI for the Sample Handler never goes in on its own. Picking one opens an Atellica configuration with it behind a Sample Handler (swap it for a Rack Handler on a Solution), and one already standing alone in a room is flagged in Export. The CI with Rack Handler has its own and stands alone.
+- General bug fixes
+
 ## 1.60.9 — 17 Nov 2026
 
 - Faster when the plan changes on big projects: each room’s dimensions are drawn together rather than one by one, so a floor of 40 rooms has less than half the elements to lay out and a change shows in about two thirds of the time.

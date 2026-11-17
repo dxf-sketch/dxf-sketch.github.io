@@ -220,6 +220,18 @@ with sync_playwright() as p:
       const s=PG.solve({photos:photos,pts:pts,camH:1.5,laser:{a:'c1',b:'c2',d:6}}),d=(a,b)=>Math.hypot(s.X[a][0]-s.X[b][0],s.X[a][1]-s.X[b][1]);
       return [d('c2','c3'),d('c3','c4'),d('c4','c1'),d('aL','aR')].map((v,i)=>Math.abs(v-[4,6,4,1.489][i])<0.15?'ok':Math.round(v*1000)).join(',')+','+(s.rms<3?'fit':'misfit')+','+s.spots}""")
     check(pg == 'ok,ok,ok,ok,fit,2', 'photo wizard: photogrammetry from two spots puts the walls and an analyzer to size (%s)' % pg)
+    # Atellica: the configuration sits under Siemens; a CH, IM or CI for the Sample Handler never goes in alone
+    at = px.evaluate("""()=>{const T=window.__dxfTest,S=T.S,A=T.A,r=S.p.rooms[0];T.ST.lu=null;
+      A.libmodel('ch930');const L=T.ST.lu,seq=L.main.join('+'),sh=S.sheet,ty=L.type;
+      A.libmodel('im1600');const seq2=T.ST.lu.main.join('+');
+      A.libmodel('atcis');const seq3=T.ST.lu.type+':'+T.ST.lu.main.join('+');S.sheet=false;
+      const kw=JSON.stringify(r.walls);if(!r.walls.length)r.walls=[6000,4000,6000,4000].map((l,i)=>({id:'zw'+i,len:l,turn:i?90:0,t:null,m:null}));
+      const keep=JSON.stringify(r.furn||[]);r.furn=(r.furn||[]).concat([{id:'zz1',kind:'equip',model:'ch930',w:1489,d:1156,wall:r.walls[0].id,along:200,off:0}]);T.render();
+      const w1=S.G.warn.filter(x=>/Atellica CH 930 Analyzer needs a Sample Handler or a Rack Handler/.test(x)).length;
+      r.furn.push({id:'zz2',kind:'equip',model:'atsh',w:1222,d:1431,wall:r.walls[0].id,along:2000,off:0});T.render();
+      const w2=S.G.warn.filter(x=>/needs a Sample Handler/.test(x)).length;r.furn=JSON.parse(keep);r.walls=JSON.parse(kw);T.render();T.ST.lu=null;
+      return [seq,sh,ty,seq2,seq3,w1,w2].join(',');}""")
+    check(at == 'atsh+ch930,lineup,sol,atsh+ch930+im1600,ci:atsh+atcis,1,0', 'Atellica CH, IM and CI for the Sample Handler go in behind a Sample Handler; a lone one is flagged (%s)' % at)
     # export bundle: the DXF, the project file and the photos in one .zip, and it opens again
     zp = px.evaluate("""async()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],id='ph_zt';r.photos=(r.photos||[]).concat([{id:id}]);
       const jpg=new Uint8Array([255,216,255,224,1,2,3,4,255,217]);try{await T.pPut(id,new Blob([jpg],{type:'image/jpeg'}));}catch(e){return 'E put '+e;}
