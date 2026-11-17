@@ -36,7 +36,8 @@ OUT_DIR = HERE / "Sketches"
 LOG_FILE = HERE / "DXF-Sketch.log"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
-VERSION = "1.62.0"
+MAX_ZIP = 300 * 1024 * 1024                  # a .zip with the photos
+VERSION = "1.62.1"
 AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────
@@ -260,6 +261,8 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, {"ok": True})
             threading.Thread(target=self.server.shutdown, daemon=True).start()
             return
+        if path == "/api/savezip":
+            return self._save_zip()
         if path != "/api/save":
             return self._send(404, {"error": "Not found."})
         try:
@@ -279,6 +282,35 @@ class Handler(BaseHTTPRequestHandler):
             log("✓", ORANGE, f"Saved {BOLD}Sketches{os.sep}{name}.dxf{OFF}  {GREY}{kb:,.0f} KB from {self._client()}{OFF}")
             self._send(200, {"ok": True, "dxf": f"Sketches/{name}.dxf"})
         except (ValueError, KeyError, OSError) as exc:
+            log("✕", RED, f"Could not save: {exc}")
+            self._send(400, {"ok": False, "error": f"Could not save: {exc}"})
+
+
+    def _save_zip(self):
+        """The export .zip (DXF, project file, photos) into Sketches, with the DXF and project file unpacked next to it."""
+        import io
+        import zipfile
+        try:
+            size = int(self.headers.get("Content-Length", "0"))
+            if not 0 < size <= MAX_ZIP:
+                return self._send(413, {"error": "Request too large."})
+            body = self.rfile.read(size)
+            name = safe_name(parse_qs(urlparse(self.path).query).get("name", ["sketch"])[0])
+            with zipfile.ZipFile(io.BytesIO(body)) as z:
+                names = z.namelist()
+                dxf = next((n for n in names if n.lower().endswith(".dxf") and "/" not in n), None)
+                pj = next((n for n in names if n.lower().endswith(".json") and "/" not in n), None)
+                if not dxf:
+                    raise ValueError("no DXF in the .zip")
+                OUT_DIR.mkdir(exist_ok=True)
+                (OUT_DIR / f"{name}.zip").write_bytes(body)
+                (OUT_DIR / f"{name}.dxf").write_bytes(z.read(dxf))
+                if pj:
+                    (OUT_DIR / f"{name}.json").write_bytes(z.read(pj))
+                photos = sum(1 for n in names if n.startswith("photos/"))
+            log("✓", ORANGE, f"Saved {BOLD}Sketches{os.sep}{name}.zip{OFF}  {GREY}{size / 1024:,.0f} KB, {photos} photo(s), from {self._client()}{OFF}")
+            self._send(200, {"ok": True, "dxf": f"Sketches/{name}.dxf", "zip": f"Sketches/{name}.zip", "photos": photos})
+        except (ValueError, KeyError, OSError, zipfile.BadZipFile) as exc:
             log("✕", RED, f"Could not save: {exc}")
             self._send(400, {"ok": False, "error": f"Could not save: {exc}"})
 

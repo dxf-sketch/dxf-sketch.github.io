@@ -2,6 +2,10 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.62.1 — 17 Nov 2026
+
+- Laptop: Save to laptop writes the same .zip as every other export, photos included, into Sketches, with the DXF and the project file unpacked next to it so AutoCAD and Open from the laptop work as before.
+
 ## 1.62.0 — 17 Nov 2026
 
 - Walls: a new room starts with three clear ways in. Wall wizard (photos all round from two spots and one laser length), Draw by hand (on the grid with your finger or Apple Pencil, then type what the laser reads) or Wall by wall (each length and angle in turn), with Rectangle and L-shape as shortcuts. Once you pick one, the choices step aside to a row of pills.
