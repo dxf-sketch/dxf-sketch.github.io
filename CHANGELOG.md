@@ -2,6 +2,12 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.5 — 17 Nov 2026
+
+- Export: the DXF, the project file and the photos now go out as one .zip, so the project file can’t get left behind or end up in another folder. Open a project file reads the .zip back, photos included. Settings › Where exports go › Project file: In a .zip, Separate or Leave out.
+- Laptop: on Windows the program runs without a terminal window; everything is in the page. Projects › Close DXF Sketch stops it, and Projects › On the iPad shows the address to type on the iPad. Starting it again while it runs just opens the page. For troubleshooting, start it with --console.
+- General bug fixes
+
 ## 1.60.4 — 17 Nov 2026
 
 - Photos: Select several at once, in one room or across the whole project, then move them to another room or delete them together (Select all, too). Undo brings them back.

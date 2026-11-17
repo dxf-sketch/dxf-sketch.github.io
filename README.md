@@ -1,6 +1,6 @@
 # DXF Sketch Companion Tool
 
-![version](https://img.shields.io/badge/version-1.60.4-0696d7)
+![version](https://img.shields.io/badge/version-1.60.5-0696d7)
 
 Measure rooms on site with a laser meter, type the readings in on a tablet, phone or computer step by step, and open the result in AutoCAD:
 a DXF (AutoCAD 2018 format, millimetres, 1:1) on your layers, with hatched walls, real dimensions in your
@@ -41,7 +41,7 @@ Also:
 | `index.html` | The whole app, including the DXF template with your blocks and dimension style |
 | `sw.js` | Offline cache: its `VERSION` must match `APP_VERSION` in `index.html` |
 | `manifest.webmanifest`, `icon.svg`, `icon-maskable.svg` | Home-screen app |
-| `laptop/DXF-Sketch.py` + `laptop/DXF-Sketch.html` | Optional laptop helper: serves the app on the local network and saves DXFs straight into a `Sketches` folder (`python DXF-Sketch.py`, opens http://dxf-sketch.localhost:8125) |
+| `laptop/DXF-Sketch.py` + `laptop/DXF-Sketch.html` | Optional laptop helper: serves the app on the local network and saves DXFs straight into a `Sketches` folder (`python DXF-Sketch.py`, opens http://dxf-sketch.localhost:8125; on Windows it runs without a terminal window and writes `DXF-Sketch.log` instead; `--console` keeps the window) |
 | `VERSION`, `CHANGELOG.md` | Release number and history (important changes only) |
 | `tests/smoke.py` | Automatic checks run before every release: the app opens, every step and 3D draw, the DXF and the survey PDF are valid (`pip install playwright ezdxf pypdf`, `python -m playwright install chromium`, `python tests/smoke.py`) |
 

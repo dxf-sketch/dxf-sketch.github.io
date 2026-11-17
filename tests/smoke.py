@@ -73,8 +73,10 @@ with sync_playwright() as p:
             check(any(x.startswith('rj:') for x in nd) and any(x.startswith('water:') for x in nd), 'equipment needs counted ' + ', '.join(nd))
             fd = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});T.DIR.h=d;T.DIR.name="DXF";const was=T.ST.exp;T.ST.exp="folder";T.download("t.dxf","0 EOF","application/dxf");await new Promise(r=>setTimeout(r,400));T.ST.exp=was;const f=await (await d.getFileHandle("t.dxf")).getFile();return (await f.text()).length+"|"+T.S.msg;}')
             check(fd.startswith('5|Saved t.dxf in DXF'), 'exports can go straight into a chosen folder (%s)' % fd)
-            pj = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});const was=T.ST.exp;T.ST.exp="folder";T.A.dxf();await new Promise(r=>setTimeout(r,800));T.ST.exp=was;const n=[];for await (const k of d.keys())n.push(k);const j=n.find(x=>x.endsWith(".json"));const p=JSON.parse(await (await (await d.getFileHandle(j)).getFile()).text());return n.sort().join(",")+"|"+p.rooms.length+"|"+(p.live===undefined);}')
+            pj = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});const was=T.ST.exp,wb=T.ST.bundle;T.ST.exp="folder";T.ST.bundle="apart";T.A.dxf();await new Promise(r=>setTimeout(r,800));T.ST.exp=was;T.ST.bundle=wb;const n=[];for await (const k of d.keys())n.push(k);const j=n.find(x=>x.endsWith(".json"));const p=JSON.parse(await (await (await d.getFileHandle(j)).getFile()).text());return n.sort().join(",")+"|"+p.rooms.length+"|"+(p.live===undefined);}')
             check(re.search(r'(\w+)\.dxf,\1\.json', pj) is not None and pj.endswith('|1|true'), 'the DXF export saves the project file next to it (%s)' % pj)
+            zf = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("Z",{create:true});T.DIR.h=d;T.DIR.name="Z";const was=T.ST.exp,wb=T.ST.bundle;T.ST.exp="folder";delete T.ST.bundle;T.A.dxf();await new Promise(r=>setTimeout(r,1200));T.ST.exp=was;T.ST.bundle=wb;const n=[];for await (const k of d.keys())n.push(k);const z=n.find(x=>x.endsWith(".zip"));const fs=z?await T.unzip(await (await (await d.getFileHandle(z)).getFile()).arrayBuffer()):{};return n.join(",")+"|"+Object.keys(fs).sort().join(",")+"|"+T.S.msg;}')
+            check(re.match(r'^([^,|]+)\.zip\|\1\.dxf,\1\.json\|Saved .*Inside: the DXF and the project file', zf) is not None, 'by default the DXF export is one .zip with the project file inside (%s)' % zf)
             df = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,keep=JSON.stringify(S.p);try{S.p.floors=[S.p.floors[0]];S.p.labs.forEach(l=>l.floor=S.p.floors[0].id);T.A.delfloor();const ok=S.p.rooms.length>0&&S.p.labs.length>0&&S.p.floors.length>0;S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return ok;}catch(e){S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return String(e);}}')
             check(df is True, 'deleting the only floor leaves a room to draw in (%s)' % df)
             pbd = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0];const q={id:T.uid(),kind:"pb",wall:r.walls[3].id,along:2000,off:0,val:"24",bw:600,bd:200,bh:1000};r.points.push(q);T.render();const d=T.toDXF(S.p);const el=T.elevSVG(r,r.walls[3].id,true);r.points=r.points.filter(x=>x!==q);T.render();return [d,el.indexOf(">PB<")>0];}')
@@ -218,6 +220,21 @@ with sync_playwright() as p:
       const s=PG.solve({photos:photos,pts:pts,camH:1.5,laser:{a:'c1',b:'c2',d:6}}),d=(a,b)=>Math.hypot(s.X[a][0]-s.X[b][0],s.X[a][1]-s.X[b][1]);
       return [d('c2','c3'),d('c3','c4'),d('c4','c1'),d('aL','aR')].map((v,i)=>Math.abs(v-[4,6,4,1.489][i])<0.15?'ok':Math.round(v*1000)).join(',')+','+(s.rms<3?'fit':'misfit')+','+s.spots}""")
     check(pg == 'ok,ok,ok,ok,fit,2', 'photo wizard: photogrammetry from two spots puts the walls and an analyzer to size (%s)' % pg)
+    # export bundle: the DXF, the project file and the photos in one .zip, and it opens again
+    zp = px.evaluate("""async()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0],id='ph_zt';r.photos=(r.photos||[]).concat([{id:id}]);
+      const jpg=new Uint8Array([255,216,255,224,1,2,3,4,255,217]);try{await T.pPut(id,new Blob([jpg],{type:'image/jpeg'}));}catch(e){return 'E put '+e;}
+      const jpg2=0;let st='zip',z,fs;try{z=await T.projZip(S.p,'Lab 1','0 EOF');st='unzip';fs=await T.unzip(await z.blob.arrayBuffer());}catch(e){return 'E '+st+' '+e;}const names=Object.keys(fs).sort();
+      const p=T.projFromZip(fs),u=p.photoData&&p.photoData[id],b=u?new Uint8Array(await (await fetch(u)).arrayBuffer()):[];
+      r.photos=r.photos.filter(x=>x.id!==id);
+      return [names.join('|'),z.photos,p.rooms.length===S.p.rooms.length,b.length===jpg.length&&b[0]===255&&b[9]===217,!!p.photoFiles].join(',');}""")
+    check(zp.startswith('Lab 1.dxf|Lab 1.json|photos/') and zp.endswith(',1,true,true,false'), 'export .zip holds the DXF, the project file and its photos, and opens again (%s)' % zp)
+    import zipfile as _zf, json
+    _buf = io.BytesIO()
+    with _zf.ZipFile(_buf, 'w', _zf.ZIP_DEFLATED) as _z:
+        _z.writestr('Lab 1/Lab 1.json', json.dumps({'name': 'Re-zipped', 'rooms': [{'id': 'r1', 'walls': []}]}))
+        _z.writestr('Lab 1/Lab 1.dxf', '0\nEOF')
+    dz = px.evaluate("""async(b64)=>{const T=window.__dxfTest,u=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));return T.projFromZip(await T.unzip(u.buffer)).name;}""", __import__('base64').b64encode(_buf.getvalue()).decode())
+    check(dz == 'Re-zipped', 'a .zip made again in Windows or Finder (deflated, in a folder) still opens (%s)' % dz)
     cx.close()
     b.close()
 srv.shutdown()

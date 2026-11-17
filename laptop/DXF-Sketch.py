@@ -9,6 +9,11 @@ writes drawings straight into the Sketches folder. No extra packages needed.
 
     python DXF-Sketch.py                    # start on port 8125 and open the browser
     python DXF-Sketch.py --port 9000 --no-browser
+    python DXF-Sketch.py --console          # keep the terminal window open (troubleshooting)
+
+On Windows the terminal window closes straight away and the program carries on
+without one: everything is in the web UI, and Projects › Close DXF Sketch stops it.
+What the window would have shown goes to DXF-Sketch.log next to the script.
 """
 import argparse
 import json
@@ -18,6 +23,7 @@ import socket
 import sys
 import threading
 import time
+import urllib.request
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -27,9 +33,10 @@ HERE = Path(__file__).resolve().parent
 SCRIPT = Path(sys.argv[0]).name              # follows the file if it is renamed
 UI_FILE = HERE / "DXF-Sketch.html"
 OUT_DIR = HERE / "Sketches"
+LOG_FILE = HERE / "DXF-Sketch.log"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
-VERSION = "1.60.4"
+VERSION = "1.60.5"
 AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────
@@ -48,6 +55,54 @@ ART = [  # "DXF" in orange, "SKETCH" in teal
 ]
 
 _print_lock = threading.Lock()
+HIDDEN = False                               # True when running without a terminal window
+
+
+class _LogFile:
+    """Stands in for the terminal when there is none: plain text, no colour codes."""
+    def __init__(self, path: Path):
+        self.f = open(path, "w", encoding="utf-8", buffering=1)
+
+    def write(self, text: str) -> int:
+        self.f.write(ANSI.sub("", text))
+        return len(text)
+
+    def flush(self) -> None:
+        self.f.flush()
+
+
+def fail(message: str) -> None:
+    """Stops with a message the person can actually see, window or not."""
+    if HIDDEN and os.name == "nt":
+        import ctypes
+        ctypes.windll.user32.MessageBoxW(None, ANSI.sub("", message), "DXF Sketch", 0x10)  # MB_ICONERROR
+    sys.exit(message)
+
+
+def start_without_window(args) -> bool:
+    """Windows: start again with pythonw.exe (no terminal window) and let this copy close."""
+    if os.name != "nt" or args.console or args.firewall or args.hidden:
+        return False
+    exe = Path(sys.executable)
+    pyw = exe.with_name("pythonw.exe")
+    if exe.name.lower() != "python.exe" or not pyw.is_file():
+        return False                         # already windowless, or an unusual Python: keep the window
+    import subprocess
+    try:
+        subprocess.Popen([str(pyw), str(Path(__file__).resolve()), *sys.argv[1:], "--hidden"], cwd=str(HERE),
+                         creationflags=0x00000008 | 0x00000200,  # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True)
+    except OSError:
+        return False
+    return True
+
+
+def already_running(port: int) -> bool:
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/ping", timeout=1.5) as r:
+            return json.loads(r.read().decode("utf-8")).get("app") == "dxf-sketch"
+    except (OSError, ValueError):
+        return False
 
 
 def vlen(text: str) -> int:
@@ -100,7 +155,7 @@ def banner(port: int, ips: list) -> None:
     print(bottom())
     print(top("Use it from the iPad"))
     print(row(f"{ORANGE}1{OFF}  Connect the iPad to the same Wi-Fi or hotspot as this laptop."))
-    print(row(f"{ORANGE}2{OFF}  In Safari, type the iPad address shown above."))
+    print(row(f"{ORANGE}2{OFF}  In the browser, type the iPad address shown above."))
     print(row(f"{ORANGE}3{OFF}  When you export, tap {BOLD}Save to laptop{OFF}: the DXF lands in the Sketches folder."))
     print(row())
     print(row(f"{BOLD}The page keeps loading on the iPad?{OFF} Something is blocking the connection:"))
@@ -111,7 +166,7 @@ def banner(port: int, ips: list) -> None:
     print(row(f"{GREY}•{OFF} A VPN can hide the laptop: disconnect it while you work."))
     print(row())
     print(row("No laptop needed: the github.io version runs on the iPad by itself.", DIM))
-    print(row("Ctrl+C or Projects › Close DXF Sketch stops this window.", DIM))
+    print(row("Projects › Close DXF Sketch stops it" + ("." if HIDDEN else ", or Ctrl+C in this window."), DIM))
     print(bottom())
     print()
     print(f"  {BOLD}Activity{OFF}")
@@ -183,7 +238,7 @@ class Handler(BaseHTTPRequestHandler):
             if who not in _seen_clients:
                 _seen_clients.add(who)
                 log("●", TEAL, f"Connected: {who}")
-            self._send(200, {"app": "dxf-sketch"})
+            self._send(200, {"app": "dxf-sketch", "port": self.server.server_address[1], "ips": lan_ips()})
         elif url.path == "/api/projects":
             files = sorted((p.stem for p in OUT_DIR.glob("*.json")), key=str.lower) if OUT_DIR.exists() else []
             self._send(200, {"files": files})
@@ -233,9 +288,21 @@ def main():
     ap.add_argument("--port", type=int, default=8125)
     ap.add_argument("--no-browser", action="store_true", help="do not open the browser on this computer")
     ap.add_argument("--firewall", action="store_true", help="Windows only, run as administrator: let the iPad reach this port")
+    ap.add_argument("--console", action="store_true", help="keep the terminal window open (Windows hides it)")
+    ap.add_argument("--hidden", action="store_true", help=argparse.SUPPRESS)
     args = ap.parse_args()
 
-    os.system("")  # turns on ANSI colours in the Windows terminal
+    if start_without_window(args):
+        return
+    global HIDDEN
+    if sys.stdout is None or args.hidden:    # pythonw.exe: no terminal to print to
+        HIDDEN = True
+        try:
+            sys.stdout = sys.stderr = _LogFile(LOG_FILE)
+        except OSError:
+            sys.stdout = sys.stderr = open(os.devnull, "w", encoding="utf-8")
+    else:
+        os.system("")  # turns on ANSI colours in the Windows terminal
     for stream in (sys.stdout, sys.stderr):
         try:
             stream.reconfigure(encoding="utf-8")   # box drawing and the logo on any Windows code page
@@ -243,7 +310,7 @@ def main():
             pass
     if args.firewall:
         if os.name != "nt":
-            sys.exit(f"{GREY}--firewall is only needed on Windows.{OFF}")
+            fail(f"{GREY}--firewall is only needed on Windows.{OFF}")
         import subprocess
         rule = f"DXF Sketch {args.port}"
         cmd = ["netsh", "advfirewall", "firewall", "add", "rule", f"name={rule}", "dir=in", "action=allow",
@@ -252,14 +319,19 @@ def main():
         if res.returncode == 0:
             print(f"{TEAL}✓{OFF} Windows Firewall now lets the iPad reach port {args.port} (rule \"{rule}\").")
         else:
-            sys.exit(f"{RED}✕ Could not add the firewall rule. Open the terminal as administrator and try again.{OFF}\n"
+            fail(f"{RED}✕ Could not add the firewall rule. Open the terminal as administrator and try again.{OFF}\n"
                      f"{GREY}{(res.stdout or res.stderr).strip()}{OFF}")
     if not UI_FILE.is_file():
-        sys.exit(f"{RED}✕ DXF-Sketch.html must sit in the same folder as {SCRIPT}.{OFF}")
+        fail(f"{RED}✕ DXF-Sketch.html must sit in the same folder as {SCRIPT}.{OFF}")
     try:
         httpd = ThreadingHTTPServer(("0.0.0.0", args.port), Handler)
     except OSError as exc:
-        sys.exit(f"{RED}✕ Port {args.port} is not available ({exc}). Try --port 9000.{OFF}")
+        if already_running(args.port):       # started twice: just bring the page up again
+            if not args.no_browser:
+                webbrowser.open(f"http://{LOCAL_HOST}:{args.port}")
+            print(f"{TEAL}●{OFF} DXF Sketch is already running on port {args.port}.")
+            return
+        fail(f"{RED}✕ Port {args.port} is not available ({exc}). Try --port 9000.{OFF}")
 
     banner(args.port, lan_ips())
     if not args.no_browser:
