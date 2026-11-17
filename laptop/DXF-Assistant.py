@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""DXF Sketch Companion Tool - site measurements to an AutoCAD DXF, entered step by step in a web UI.
+"""DXF Assistant Companion Tool - site measurements to an AutoCAD DXF, entered step by step in a web UI.
 
 Author: Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>
 
-Optional laptop helper: the page DXF-Sketch.html also works on its own (github.io).
+Optional laptop helper: the page DXF-Assistant.html also works on its own (github.io).
 This script serves it on the local network and adds a 'Save to laptop' button that
 writes drawings straight into the Sketches folder. No extra packages needed.
 
-    python DXF-Sketch.py                    # start on port 8125 and open the browser
-    python DXF-Sketch.py --port 9000 --no-browser
-    python DXF-Sketch.py --console          # keep the terminal window open (troubleshooting)
+    python DXF-Assistant.py                    # start on port 8125 and open the browser
+    python DXF-Assistant.py --port 9000 --no-browser
+    python DXF-Assistant.py --console          # keep the terminal window open (troubleshooting)
 
 On Windows the terminal window closes straight away and the program carries on
 without one: everything is in the web UI, and Projects › Quit stops it.
-What the window would have shown goes to DXF-Sketch.log next to the script.
+What the window would have shown goes to DXF-Assistant.log next to the script.
 """
 import argparse
 import json
@@ -31,13 +31,13 @@ from urllib.parse import parse_qs, urlparse
 
 HERE = Path(__file__).resolve().parent
 SCRIPT = Path(sys.argv[0]).name              # follows the file if it is renamed
-UI_FILE = HERE / "DXF-Sketch.html"
+UI_FILE = HERE / "DXF-Assistant.html"
 OUT_DIR = HERE / "Sketches"
-LOG_FILE = HERE / "DXF-Sketch.log"
+LOG_FILE = HERE / "DXF-Assistant.log"
 LOCAL_HOST = "dxf-sketch.localhost"          # *.localhost always points to this computer in Edge, Chrome and Firefox
 MAX_BODY = 20 * 1024 * 1024
 MAX_ZIP = 300 * 1024 * 1024                  # a .zip with the photos
-VERSION = "1.64.0"
+VERSION = "1.65.0"
 AUTHOR = "Dionysios Theofilopoulos <d.theofilopoulos@gmail.com>"
 
 # ── look ─────────────────────────────────────────────────────────────────────
@@ -76,7 +76,7 @@ def fail(message: str) -> None:
     """Stops with a message the person can actually see, window or not."""
     if HIDDEN and os.name == "nt":
         import ctypes
-        ctypes.windll.user32.MessageBoxW(None, ANSI.sub("", message), "DXF Sketch", 0x10)  # MB_ICONERROR
+        ctypes.windll.user32.MessageBoxW(None, ANSI.sub("", message), "DXF Assistant", 0x10)  # MB_ICONERROR
     sys.exit(message)
 
 
@@ -232,8 +232,8 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 self._send(200, UI_FILE.read_bytes(), "text/html; charset=utf-8")
             except OSError:
-                log("✕", RED, "DXF-Sketch.html is missing next to the script")
-                self._send(500, b"DXF-Sketch.html is missing next to the script.", "text/plain")
+                log("✕", RED, "DXF-Assistant.html is missing next to the script")
+                self._send(500, b"DXF-Assistant.html is missing next to the script.", "text/plain")
         elif url.path == "/api/ping":
             who = self._client()
             if who not in _seen_clients:
@@ -316,7 +316,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main():
-    ap = argparse.ArgumentParser(prog=SCRIPT, description="DXF Sketch - site measurements to AutoCAD DXF.")
+    ap = argparse.ArgumentParser(prog=SCRIPT, description="DXF Assistant - site measurements to AutoCAD DXF.")
     ap.add_argument("--port", type=int, default=8125)
     ap.add_argument("--no-browser", action="store_true", help="do not open the browser on this computer")
     ap.add_argument("--firewall", action="store_true", help="Windows only, run as administrator: let the iPad reach this port")
@@ -344,7 +344,7 @@ def main():
         if os.name != "nt":
             fail(f"{GREY}--firewall is only needed on Windows.{OFF}")
         import subprocess
-        rule = f"DXF Sketch {args.port}"
+        rule = f"DXF Assistant {args.port}"
         cmd = ["netsh", "advfirewall", "firewall", "add", "rule", f"name={rule}", "dir=in", "action=allow",
                "protocol=TCP", f"localport={args.port}", "profile=private,public,domain"]
         res = subprocess.run(cmd, capture_output=True, text=True)
@@ -354,14 +354,14 @@ def main():
             fail(f"{RED}✕ Could not add the firewall rule. Open the terminal as administrator and try again.{OFF}\n"
                      f"{GREY}{(res.stdout or res.stderr).strip()}{OFF}")
     if not UI_FILE.is_file():
-        fail(f"{RED}✕ DXF-Sketch.html must sit in the same folder as {SCRIPT}.{OFF}")
+        fail(f"{RED}✕ DXF-Assistant.html must sit in the same folder as {SCRIPT}.{OFF}")
     try:
         httpd = ThreadingHTTPServer(("0.0.0.0", args.port), Handler)
     except OSError as exc:
         if already_running(args.port):       # started twice: just bring the page up again
             if not args.no_browser:
                 webbrowser.open(f"http://{LOCAL_HOST}:{args.port}")
-            print(f"{TEAL}●{OFF} DXF Sketch is already running on port {args.port}.")
+            print(f"{TEAL}●{OFF} DXF Assistant is already running on port {args.port}.")
             return
         fail(f"{RED}✕ Port {args.port} is not available ({exc}). Try --port 9000.{OFF}")
 

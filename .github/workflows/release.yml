@@ -53,8 +53,8 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         run: |
           V="${{ steps.v.outputs.version }}"
-          zip -r "DXF-Sketch-$V.zip" index.html sw.js manifest.webmanifest .nojekyll icons laptop README.md CHANGELOG.md VERSION LICENSE
-          zip -j "DXF-Sketch-laptop-$V.zip" laptop/DXF-Sketch.py laptop/DXF-Sketch.html LICENSE
+          zip -r "DXF-Assistant-$V.zip" index.html sw.js manifest.webmanifest .nojekyll icons laptop README.md CHANGELOG.md VERSION LICENSE
+          zip -j "DXF-Assistant-laptop-$V.zip" laptop/DXF-Assistant.py laptop/DXF-Assistant.html LICENSE
 
       - name: Create release
         if: steps.check.outputs.exists == 'false'
@@ -62,6 +62,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           V="${{ steps.v.outputs.version }}"
-          gh release create "v$V" "DXF-Sketch-$V.zip" "DXF-Sketch-laptop-$V.zip" \
-            --title "DXF Sketch $V" --notes-file notes.md --target "${{ github.sha }}" --latest
+          gh release create "v$V" "DXF-Assistant-$V.zip" "DXF-Assistant-laptop-$V.zip" \
+            --title "DXF Assistant $V" --notes-file notes.md --target "${{ github.sha }}" --latest
 

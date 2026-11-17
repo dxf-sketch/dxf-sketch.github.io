@@ -20,8 +20,8 @@ v = (ROOT / 'VERSION').read_text().strip()
 page = (ROOT / 'index.html').read_text(encoding='utf-8')
 check(re.search(r"const APP_VERSION='([^']+)'", page).group(1) == v, 'APP_VERSION matches VERSION ' + v)
 check(re.search(r"const VERSION = '([^']+)'", (ROOT / 'sw.js').read_text()).group(1) == v, 'sw.js VERSION matches')
-check(re.search(r'VERSION = "([^"]+)"', (ROOT / 'laptop/DXF-Sketch.py').read_text()).group(1) == v, 'laptop helper VERSION matches')
-check((ROOT / 'laptop/DXF-Sketch.html').read_text(encoding='utf-8') == page, 'laptop/DXF-Sketch.html is the same page')
+check(re.search(r'VERSION = "([^"]+)"', (ROOT / 'laptop/DXF-Assistant.py').read_text()).group(1) == v, 'laptop helper VERSION matches')
+check((ROOT / 'laptop/DXF-Assistant.html').read_text(encoding='utf-8') == page, 'laptop/DXF-Assistant.html is the same page')
 check(re.search(r'"v": "' + re.escape(v) + '"', page) is not None, "What's new has an entry for " + v)
 check(('## ' + v + ' ') in (ROOT / 'CHANGELOG.md').read_text(encoding='utf-8'), 'CHANGELOG.md has a section for ' + v)
 
@@ -73,10 +73,10 @@ with sync_playwright() as p:
             check(any(x.startswith('rj:') for x in nd) and any(x.startswith('water:') for x in nd), 'equipment needs counted ' + ', '.join(nd))
             fd = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});T.DIR.h=d;T.DIR.name="DXF";const was=T.ST.exp;T.ST.exp="folder";T.download("t.dxf","0 EOF","application/dxf");await new Promise(r=>setTimeout(r,400));T.ST.exp=was;const f=await (await d.getFileHandle("t.dxf")).getFile();return (await f.text()).length+"|"+T.S.msg;}')
             check(fd.startswith('5|Saved t.dxf in DXF'), 'exports can go straight into a chosen folder (%s)' % fd)
-            pj = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("DXF",{create:true});const was=T.ST.exp,wb=T.ST.bundle;T.ST.exp="folder";T.ST.bundle="apart";T.A.dxf();await new Promise(r=>setTimeout(r,800));T.ST.exp=was;T.ST.bundle=wb;const n=[];for await (const k of d.keys())n.push(k);const j=n.find(x=>x.endsWith(".json"));const p=JSON.parse(await (await (await d.getFileHandle(j)).getFile()).text());return n.sort().join(",")+"|"+p.rooms.length+"|"+(p.live===undefined);}')
-            check(re.search(r'(\w+)\.dxf,\1\.json', pj) is not None and pj.endswith('|1|true'), 'the DXF export saves the project file next to it (%s)' % pj)
-            zf = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("Z",{create:true});T.DIR.h=d;T.DIR.name="Z";const was=T.ST.exp,wb=T.ST.bundle;T.ST.exp="folder";delete T.ST.bundle;T.A.dxf();await new Promise(r=>setTimeout(r,1200));T.ST.exp=was;T.ST.bundle=wb;const n=[];for await (const k of d.keys())n.push(k);const z=n.find(x=>x.endsWith(".zip"));const fs=z?await T.unzip(await (await (await d.getFileHandle(z)).getFile()).arrayBuffer()):{};return n.join(",")+"|"+Object.keys(fs).sort().join(",")+"|"+T.S.msg;}')
-            check(re.match(r'^([^,|]+)\.zip\|\1\.dxf,\1\.json\|Saved .*Inside: the DXF and the project file', zf) is not None, 'by default the DXF export is one .zip with the project file inside (%s)' % zf)
+            pj = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("D2",{create:true});T.DIR.h=d;T.DIR.name="D2";const was=T.ST.exp;T.ST.exp="folder";T.A.dxf();await new Promise(r=>setTimeout(r,800));T.ST.exp=was;const n=[];for await (const k of d.keys())n.push(k);return n.sort().join(",");}')
+            check(re.fullmatch(r'[^,]+\.dxf', pj) is not None, 'Export DXF writes the drawing only (%s)' % pj)
+            zf = pg.evaluate('async()=>{const T=window.__dxfTest;const root=await navigator.storage.getDirectory();const d=await root.getDirectoryHandle("Z",{create:true});T.DIR.h=d;T.DIR.name="Z";const was=T.ST.exp,wb=T.ST.bundle;T.ST.exp="folder";T.A.projexp();await new Promise(r=>setTimeout(r,1200));T.ST.exp=was;T.ST.bundle=wb;const n=[];for await (const k of d.keys())n.push(k);const z=n.find(x=>x.endsWith(".zip"));const fs=z?await T.unzip(await (await (await d.getFileHandle(z)).getFile()).arrayBuffer()):{};return n.join(",")+"|"+Object.keys(fs).sort().join(",")+"|"+T.S.msg;}')
+            check(re.match(r'^([^,|]+)\.zip\|\1\.dxf,\1\.json\|Saved .*Inside: the DXF and the project file', zf) is not None, 'Export project is one .zip with the DXF and the project file inside (%s)' % zf)
             df = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,keep=JSON.stringify(S.p);try{S.p.floors=[S.p.floors[0]];S.p.labs.forEach(l=>l.floor=S.p.floors[0].id);T.A.delfloor();const ok=S.p.rooms.length>0&&S.p.labs.length>0&&S.p.floors.length>0;S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return ok;}catch(e){S.p=JSON.parse(keep);S.room=S.p.rooms[0].id;T.render();return String(e);}}')
             check(df is True, 'deleting the only floor leaves a room to draw in (%s)' % df)
             pbd = pg.evaluate('()=>{const T=window.__dxfTest,S=T.S,r=S.p.rooms[0];const q={id:T.uid(),kind:"pb",wall:r.walls[3].id,along:2000,off:0,val:"24",bw:600,bd:200,bh:1000};r.points.push(q);T.render();const d=T.toDXF(S.p);const el=T.elevSVG(r,r.walls[3].id,true);r.points=r.points.filter(x=>x!==q);T.render();return [d,el.indexOf(">PB<")>0];}')
@@ -253,6 +253,11 @@ with sync_playwright() as p:
     fr = [px.evaluate(fcj, dict(spots=1, tilts=[70, 110], top=1, roomH=1, ties=1, seed=sd)) for sd in (7919, 15838)]
     fw = [max(abs(x) for x in r['e']) if r else None for r in fr]
     check(all(w is not None and w <= 40 for w in fw) and all(abs(r['H'] - 2.8) < 0.01 for r in fr), 'wall wizard: floor and ceiling corners from one spot put a 6 × 4 m room to within 40 mm (%s)' % fw)
+    # profiles decide the steps; Export site survey asks for signatures first
+    pf = px.evaluate("""()=>{const T=window.__dxfTest,S=T.S,A=T.A,was=T.ST.profile,out=[];const dock=()=>[...document.querySelectorAll('#dock [data-act=steptab]')].map(b=>b.dataset.v).join('');
+      A.profset('measure');out.push(dock());A.step(5);out.push(S.step);A.profset('building');out.push(dock());A.stepset('7:1');out.push(dock());
+      A.profset('lab');out.push(dock());A.step(8);A.report();out.push(S.sheet);A.sheetclose();if(was)T.ST.profile=was;return out.join(',');}""")
+    check(pf == '12438,8,1243568,12435678,12435678,survey', 'profiles: Measure only, Other rooms and Clinical laboratory show their steps; Export site survey opens the signatures first (%s)' % pf)
     # Wall wizard: start over in parts (marks, last spot, everything), and take a drawn draft out again
     rd = px.evaluate("""async()=>{const T=window.__dxfTest,A=T.A,S=T.S,out=[];A.pwopen();await new Promise(r=>setTimeout(r,800));let P=T.getPW();
       const blob=new Blob([new Uint8Array([255,216,255,217])],{type:'image/jpeg'});

@@ -2,6 +2,14 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.65.0 — 17 Nov 2026
+
+- DXF Sketch is now DXF Assistant. Same address, same projects, photos and backups; the laptop program is DXF-Assistant.py.
+- Profiles: the first time it starts, DXF Assistant asks what you are surveying. Clinical laboratory has every step, analyzers and Atellica configurations included; Other rooms leaves out the Equipment step; Measure only keeps the rooms, walls, openings and pillars. Settings › Profile changes it, and Settings › Steps switches any step on or off.
+- Export: three clear buttons. Export DXF is the drawing only; Export site survey opens the signatures (surveyor and stakeholder) and then makes the PDF; Export project is the .zip with the DXF, the project file and the photos. Plan picture and Revisions are gone from Export.
+- Equipment: no more Remove all equipment in this room.
+- General bug fixes
+
 ## 1.64.0 — 17 Nov 2026
 
 - Wall wizard: each corner is now a vertical edge, tapped at the floor and at the ceiling. With the room height measured once by laser, the angles down and up to the two ends place every corner from a single spot, whatever height the iPad is held at. In tests a 6 × 4 m room came out within about 10–40 mm from one spot.
