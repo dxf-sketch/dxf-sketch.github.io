@@ -2,6 +2,11 @@
 
 Important changes only; smaller ones are listed as general bug fixes.
 
+## 1.60.4 — 17 Nov 2026
+
+- Photos: Select several at once, in one room or across the whole project, then move them to another room or delete them together (Select all, too). Undo brings them back.
+- General bug fixes
+
 ## 1.60.3 — 17 Nov 2026
 
 - Photo angles: when turned on, they show for every room on the floor, not only the selected one (the other rooms’ a little lighter).
